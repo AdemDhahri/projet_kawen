@@ -1,3 +1,16 @@
+<?php
+include('../../Model/chercheur.php');
+include('../../Model/commentaire.php');
+
+include('../../Control/actions/add_commentaire.php');
+include('../../Control/actions/Show_commentaire.php');
+include('../../Control/actions/ShowJobsAction.php');
+
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,13 +22,12 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="../../assests/front/img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -35,8 +47,7 @@
 <body>
     <div class="container-xxl bg-white p-0">
         <!-- Spinner Start -->
-        <div id="spinner"
-            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
@@ -49,35 +60,33 @@
             <a href="index.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
                 <img src="../../assests/front/img/kaween3.png" alt="" width="200" height="50" />
             </a>
-            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
-                data-bs-target="#navbarCollapse">
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="index.php" class="nav-item nav-link">ACCUEIL</a>
-                    <a href="about.php" class="nav-item nav-link">A PROPOS</a>
+                    <a href="index.php" class="nav-item nav-link">Accueil</a>
+                    <a href="about.php" class="nav-item nav-link">A propos</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">chercheur</a>
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">chercheur</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="addchercheur.php" class="dropdown-item">ajouter chercheur</a>
+                            <a href="addchercheur.php" class="dropdown-item active">ajouter chercheur</a>
                             <a href="gererchercheur.php" class="dropdown-item">mes annonces</a>
-                            <a href="gererchercheur.php" class="dropdown-item">les chercheurs</a>
+                            <a href="les_chercheurs.php" class="dropdown-item">les chercheurs</a>
 
                         </div>
                     </div>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Partenaires</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="category.php" class="dropdown-item">formations</a>
-                            <a href="testimonial.php" class="dropdown-item active">Nos Offres</a>
-                            <a href="404.php" class="dropdown-item">Cour en Ligne</a>
+                            <a href="category.php" class="dropdown-item">Job Category</a>
+                            <a href="testimonial.php" class="dropdown-item">Nos offres</a>
+                            <a href="404.php" class="dropdown-item">404</a>
                         </div>
                     </div>
                     <a href="contact.php" class="nav-item nav-link">Contactez-nous</a>
                 </div>
-                <a href="login.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">S'inscrire<i
-                        class="fa fa-arrow-right ms-3"></i></a>
+                <a href="login.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">S'inscrire<i class="fa fa-arrow-right ms-3"></i></a>
             </div>
         </nav>
         <!-- Navbar End -->
@@ -86,12 +95,12 @@
         <!-- Header End -->
         <div class="container-xxl py-5 bg-dark page-header mb-5">
             <div class="container my-5 pt-5 pb-4">
-                <h1 class="display-3 text-white mb-3 animated slideInDown">Nos Offres</h1>
+                <h1 class="display-3 text-white mb-3 animated slideInDown">researcher List</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb text-uppercase">
-                        <li class="breadcrumb-item"><a href="#">Accueil</a></li>
-                        <li class="breadcrumb-item"><a href="#">Partenaires</a></li>
-                        <li class="breadcrumb-item text-white active" aria-current="page">Testimonial</li>
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">researcher List</li>
                     </ol>
                 </nav>
             </div>
@@ -99,65 +108,116 @@
         <!-- Header End -->
 
 
-        <!-- Testimonial Start -->
-        <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <!-- Jobs Start -->
+        <div class="container-xxl py-5">
             <div class="container">
-                <h1 class="text-center mb-5">Offres a la une!</h1>
-                <div class="owl-carousel testimonial-carousel">
-                    <div class="testimonial-item bg-light rounded p-4">
-                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                        <p>"Étudiants, économisez sur vos cours et développez vos compétences avec nos remises
-                            exclusives!</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src="../../assests/front/img/special.jpg"
-                                style="width: 50px; height: 50px;">
-                            <div class="ps-3">
-                                <h5 class="mb-1"></h5>Offre pour les étudiants </h5>
-
+                <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">researcher Listing</h1>
+                <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
+                    <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
+                        <li class="nav-item">
+                            <a class="d-flex align-items-center text-start mx-3 ms-0 pb-3 active" data-bs-toggle="pill" href="#tab-1">
+                                <h6 class="mt-n1 mb-0">Featured</h6>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="d-flex align-items-center text-start mx-3 pb-3" data-bs-toggle="pill" href="#tab-2">
+                                <h6 class="mt-n1 mb-0">Full Time</h6>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-3">
+                                <h6 class="mt-n1 mb-0">Part Time</h6>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane fade show p-0 active">
+                            
+                        <?php foreach ($Recruiters as $key => $Recruiter) { ?>
+    <div class="job-item p-4 mb-4">
+        <div class="row g-4">
+            <!-- Colonne pour les détails du recruteur -->
+            <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                <!-- Logo de l'entreprise -->
+                <img class="flex-shrink-0 img-fluid border rounded" src="../../assests/front/img/com-logo-1.jpg" alt="" style="width: 100px; height: 100px;">
+                <div class="text-start ps-4">
+                    <!-- Nom et prénom du recruteur -->
+                    <h5 class="mb-3"><?= $Recruiter['nom']." ".$Recruiter['prenom'] ?></h5>
+                    <!-- Informations de contact du recruteur -->
+                    <p class="mb-1"><strong>Téléphone:</strong> <?= $Recruiter['tel'] ?></p>
+                    <p class="mb-1"><strong>Email:</strong> <?= $Recruiter['mail'] ?></p>
+                    <p class="mb-1"><strong>CV:</strong> <?= $Recruiter['cv'] ?></p>
+                    
+                    <!-- Bouton pour afficher les détails supplémentaires -->
+                    <button class="btn btn-primary btn-sm mt-3 toggle-details">Plus</button>
+                    <!-- Div pour les détails supplémentaires, initialement masqués -->
+                    
+                    <div class="additional-details" style="display: none;">
+                    <br>
+                        <!-- Lettre de motivation et message du recruteur -->
+                        <p class="mb-1"><strong>Lettre de motivation:</strong> <?= $Recruiter['l_d_v'] ?></p>
+                        <p class="mb-1"><strong>Message:</strong> <?= $Recruiter['message'] ?></p>
+                    
+                        <!-- Commentaires -->
+                        <hr>
+                        <a href="page_co.php?id=<?= $Recruiter['id_c'] ?>" class="dropdown-item">voir commentaires:</a>                       
+                    </div>
+                </div>
+            </div>
+            <!-- Colonne pour les actions -->
+            <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                <!-- Actions -->
+                <div class="d-flex mb-3">
+                    <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a>
+                </div>
+                <!-- Date limite -->
+                
+                <!-- Formulaire pour ajouter un commentaire -->
+                <form action="../../Control/actions/add_commentaire.php?id=<?= $Recruiter['id_c'] ?>" method="post">
+                    <div class="row mt-3">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="commentaire">Commentaire :</label>
+                                <textarea class="form-control" id="commentaire" name="commentaire" rows="3"></textarea>
                             </div>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" name="submit" class="btn btn-primary mt-4">Ajouter</button>
                         </div>
                     </div>
-                    <div class="testimonial-item bg-light rounded p-4">
-                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                        <p>Profitez des remises printanières et fleurissez votre apprentissage avec des offres
-                            spéciales!</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src="../../assests/front/img/imm.jpg"
-                                style="width: 50px; height: 50px;">
-                            <div class="ps-3">
-                                <h5 class="mb-1">Offre du printemps </h5>
+                </form>
+            </div>
+        </div>
+    </div>
+<?php } ?>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item bg-light rounded p-4">
-                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                        <p>Des remises exceptionnelles pour le Black Friday - Ne manquez pas cette occasion de faire des
-                            économies sur vos cours!</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src="../../assests/front/img/bf.png"
-                                style="width: 50px; height: 50px;">
-                            <div class="ps-3">
-                                <h5 class="mb-1">Black Friday</h5>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item bg-light rounded p-4">
-                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                        <p>restez a l'ecoute</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src=".jpg" style="width: 50px; height: 50px;">
-                            <div class="ps-3">
-                                <h5 class="mb-1">Prochainement</h5>
 
-                            </div>
+<script>
+    // JavaScript to toggle additional details
+    document.querySelectorAll('.toggle-details').forEach(button => {
+        button.addEventListener('click', function() {
+            const details = this.parentNode.querySelector('.additional-details');
+            if (details.style.display === 'none') {
+                details.style.display = 'block';
+                this.textContent = 'Moins'; // Change button text to "Moins" when details are visible
+            } else {
+                details.style.display = 'none';
+                this.textContent = 'Plus'; // Change button text back to "Plus" when details are hidden
+            }
+        });
+    });
+</script>
+
+
+                            <a class="btn btn-primary py-3 px-5" href="">Browse More researcher</a>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Testimonial End -->
+        <!-- Jobs End -->
 
 
         <!-- Footer Start -->
@@ -196,10 +256,8 @@
                         <h5 class="text-white mb-4">Newsletter</h5>
                         <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
                         <div class="position-relative mx-auto" style="max-width: 400px;">
-                            <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text"
-                                placeholder="Your email">
-                            <button type="button"
-                                class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                            <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                            <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
                         </div>
                     </div>
                 </div>
