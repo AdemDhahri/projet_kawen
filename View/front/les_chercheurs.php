@@ -144,7 +144,12 @@ include('../../Control/actions/ShowJobsAction.php');
                     <!-- Nom et prénom du recruteur -->
                     <h5 class="mb-3"><?= $Recruiter['nom']." ".$Recruiter['prenom'] ?></h5>
                     <!-- Informations de contact du recruteur -->
+<<<<<<< HEAD
                     <p class="mb-1"><strong>Téléphone:</strong> <a href="https://wa.me/<?= $Recruiter['tel'] ?>?tel=<?= $Recruiter['tel'] ?>"><?= $Recruiter['tel'] ?></a></p>
+=======
+                    <p class="mb-1"><strong>Téléphone:</strong> <?= $Recruiter['tel'] ?></p>
+                    <p class="mb-1"><strong>Email:</strong> <?= $Recruiter['mail'] ?></p>
+>>>>>>> f0659b432a82cd9ac16ea6d269e1e4b21b3a7dd1
                     <p class="mb-1"><strong>CV:</strong> <?= $Recruiter['cv'] ?></p>
                     
                     <!-- Bouton pour afficher les détails supplémentaires -->
