@@ -8,21 +8,26 @@ class chercheurs
     private $prenom;
     private $mail;
     private $tel;
+    private $ville;
     private $cv;
     private $l_d_v;
     private $message;
 
+
     // Constructor
-    public function __construct($id_c,$nom,$prenom, $mail,$tel,$cv,$LDM,$message)
+    public function __construct($id_c,$nom,$prenom, $mail,$tel,$ville,$cv,$LDM,$message)
     {
         $this->id_c = $id_c;
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->mail = $mail;
         $this->tel =$tel;
+        $this->ville =$ville;
         $this->cv = $cv;
         $this->l_d_v = $LDM;
         $this->message = $message;
+
+
     }
 
     // Getter and Setter methods...
@@ -67,6 +72,15 @@ class chercheurs
         $this->tel = $tel;
     }
 
+    function get_ville()
+    {
+        return $this->ville;
+    }
+    function set_ville($ville)
+    {
+        $this->ville = $ville;
+    }
+
     function get_tel()
     {
         return $this->tel;
@@ -98,5 +112,6 @@ class chercheurs
     {
         return $this->message;
     }
+   
     
 }

@@ -197,7 +197,9 @@ include('../../Control/actions/AddJobAction.php');
                         <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">chercheur</a>
                         <div class="dropdown-menu rounded-0 m-0">
                             <a href="addchercheur.php" class="dropdown-item active">ajouter chercheur</a>
-                            <a href="gererchercheur.php" class="dropdown-item">les chercheurs</a>
+                            <a href="gererchercheur.php" class="dropdown-item">mes annonces</a>
+                            <a href="les_chercheurs.php" class="dropdown-item">les chercheurs</a>
+
                         </div>
                     </div>
                     <div class="nav-item dropdown">
