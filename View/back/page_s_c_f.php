@@ -4,8 +4,6 @@ include('../../Model/commentaire.php');
 
 
 include('../../Control/actions/Show_commentaire.php');
-include('../../Control/actions/ShowJobsAction.php');
-
 
 
 ?>
@@ -375,54 +373,16 @@ include('../../Control/actions/ShowJobsAction.php');
 
                 </div>
                 
-                <?php foreach ($Recruiters as $key => $Recruiter) { ?>
-    <div class="job-item p-4 mb-4">
-        <div class="row g-4">
-            <div class="col-sm-12 col-md-8 d-flex align-items-center">
-                <img class="flex-shrink-0 img-fluid border rounded" src="../../assests/front/img/com-logo-1.jpg" alt="" style="width: 100px; height: 100px;">
-                <div class="text-start ps-4">
-                    <h5 class="mb-3"><?= $Recruiter['nom']." ".$Recruiter['prenom'] ?></h5>
-                    <p class="mb-1"><strong>Téléphone:</strong> <?= $Recruiter['tel'] ?></p>
-                    <p class="mb-1"><strong>Email:</strong> <?= $Recruiter['mail'] ?></p>
-                    <p class="mb-1"><strong>CV:</strong> <?= $Recruiter['cv'] ?></p>
-                    <button class="btn btn-primary btn-sm mt-3 toggle-details">Plus</button>
-                    <!-- Additional attributes will be toggled by JavaScript -->
-                    <div class="additional-details" style="display: none;">
-                        <p class="mb-1"><strong>lettre de motivation:</strong> <?= $Recruiter['l_d_v'] ?></p>
-                        <p class="mb-1"><strong>Message:</strong> <?= $Recruiter['message'] ?></p>
-                        <hr>
-                        
-                        <a href="page_s_c_f.php?id=<?= $Recruiter['id_c'] ?>" class="dropdown-item">voir commentaires:</a>                       
-                    
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                <div class="d-flex mb-3">
-                    <a class="btn btn-light btn-square me-3" href="#"><i class="far fa-heart text-primary"></i></a>
-                    <a class="btn btn-secondary me-3" href="../../View/back/deleteback.php?id=<?= $Recruiter['id_c']; ?>" name="delete_id" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce poste ?');">Supprimer</a>
-                </div>
-                <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date Line: 01 Jan, 2045</small>
-            </div>
-        </div>
-    </div>
-<?php } ?>
+               
 
-<script>
-    // JavaScript to toggle additional details
-    document.querySelectorAll('.toggle-details').forEach(button => {
-        button.addEventListener('click', function() {
-            const details = this.parentNode.querySelector('.additional-details');
-            if (details.style.display === 'none') {
-                details.style.display = 'block';
-                this.textContent = 'Moins'; // Change button text to "Moins" when details are visible
-            } else {
-                details.style.display = 'none';
-                this.textContent = 'Plus'; // Change button text back to "Plus" when details are hidden
-            }
-        });
-    });
-</script>
+                <?php foreach ($comment as $key => $comment) { ?>
+                            <strong>amine kas:</strong> <br>
+                            <div class="comment border p-3 mb-3">
+                            <p class="mb-1"><?= $comment['texte'] ?></p>
+                        </div>
+                        <a class="btn btn-secondary me-3" href="../../View/back/dele_b_c.php?id=<?= $comment['id_cc']; ?>" name="delete_id">Supprimer</a>
+<br>
+                        <?php } ?>
 
 
 

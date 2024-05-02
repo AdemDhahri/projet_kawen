@@ -12,6 +12,7 @@ class chercheurs
     private $l_d_v;
     private $message;
 
+
     // Constructor
     public function __construct($id_c,$nom,$prenom, $mail,$tel,$cv,$LDM,$message)
     {
@@ -23,6 +24,8 @@ class chercheurs
         $this->cv = $cv;
         $this->l_d_v = $LDM;
         $this->message = $message;
+
+
     }
 
     // Getter and Setter methods...
@@ -98,5 +101,6 @@ class chercheurs
     {
         return $this->message;
     }
+   
     
 }
