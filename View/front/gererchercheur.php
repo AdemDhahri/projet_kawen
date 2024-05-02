@@ -165,10 +165,14 @@ include('../../Control/actions/DeleteJobAction.php');
                 <div class="text-start ps-4">
                     <h5 class="mb-3"><?= $Recruiter['nom']." ".$Recruiter['prenom'] ?></h5>
                     <p class="mb-1"><strong>Téléphone:</strong> <?= $Recruiter['tel'] ?></p>
+<<<<<<< HEAD
                     <p class="mb-1"><strong>ville:</strong> <?= $Recruiter['ville'] ?></p>
 
                     <p class="mb-1"><strong>Email:</strong> <?= $Recruiter['mail'] ?></p>
 
+=======
+                    <p class="mb-1"><strong>Email:</strong> <?= $Recruiter['mail'] ?></p>
+>>>>>>> 862097749bb1719d7636cd55c517eb5e152bc7d1
                     <p class="mb-1"><strong>CV:</strong> <?= $Recruiter['cv'] ?></p>
                     <button class="btn btn-primary btn-sm mt-3 toggle-details">Plus</button>
                     <!-- Additional attributes will be toggled by JavaScript -->
