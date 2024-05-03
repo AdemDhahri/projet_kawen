@@ -1,0 +1,217 @@
+// Lcd pinout settings
+sbit LCD_RS at RC4_bit;
+sbit LCD_EN at RC5_bit;
+sbit LCD_D7 at RC3_bit;
+sbit LCD_D6 at RC2_bit;
+sbit LCD_D5 at RC1_bit;
+sbit LCD_D4 at RC0_bit;
+/*
+sbit BCD_D0 at RD0_bit;
+sbit BCD_D1 at RD1_bit;
+sbit BCD_D2 at RD2_bit;
+sbit BCD_D3 at RD3_bit;
+  */
+// Pin direction
+sbit LCD_RS_Direction at TRISC4_bit;
+sbit LCD_EN_Direction at TRISC5_bit;
+sbit LCD_D7_Direction at TRISC3_bit;
+sbit LCD_D6_Direction at TRISC2_bit;
+sbit LCD_D5_Direction at TRISC1_bit;
+sbit LCD_D4_Direction at TRISC0_bit;
+
+
+// Define input/output pins
+#define CALL_BUTTON_RB4    RB4_bit
+#define CALL_BUTTON_RB6    RB6_bit
+#define RESET_BUTTON_RB5   RB5_bit
+#define RESET_BUTTON_RB7   RB7_bit
+//#define NURSE_LED_RA0      RA0_bit
+//#define NURSE_LED_RA1      RA1_bit
+#define NURSE_LED_RB2      RB2_bit
+#define DOCTOR_BUTTON_RA4  RA4_bit
+#define RESET_BUTTON_RB0   RB0_bit
+#define CRITICAL_LED_RA3   RA3_bit
+#define ALERT_BUZZER_RA2  RA2_bit
+#define MOTOR PORTD.RD7
+
+
+//#define displayA() {PORTD.RD0=0;PORTD.RD1=1;PORTD.RD2=0;PORTD.RD3=1;}
+
+
+
+
+// Other constants
+#define TEMPERATURE_SENSOR_RE0 ANS0_bit
+#define HEART_RATE_SENSOR_RE1   ANS1_bit
+
+void interrupt() {
+    if (INTCON.INTF) { // Si l'interruption externe RB0/INT a été déclenchée
+        // Gérer l'appui sur le bouton RESET_BUTTON_RB0
+        INTCON.INTF = 0; // Réinitialisez le drapeau d'interruption
+    }
+    if (INTCON.RBIF) { // Si l'interruption des changements d'état sur les broches RB a été déclenchée
+        if (CALL_BUTTON_RB4 || CALL_BUTTON_RB6) {
+            // Gérer l'appel de l'infirmier
+        }
+        if (RESET_BUTTON_RB5 || RESET_BUTTON_RB7) {
+            // Gérer la réinitialisation
+        }
+        INTCON.RBIF = 0; // Réinitialisez le drapeau d'interruption des changements d'état sur les broches RB
+    }
+    if (INTCON.T0IF) { // Si l'interruption externe RB0/INT a été déclenchée
+        // Gérer l'appui sur le bouton RESET_BUTTON_RB0
+        ALERT_BUZZER_RA2=1;
+        CRITICAL_LED_RA3=1;
+        //PORTD=138;
+        Delay_ms(300); // Attente de 300 ms avec le moteur allumé
+        CRITICAL_LED_RA3=0;
+         
+        delay_ms(2000);
+
+         TMR0=253 ;
+
+    }
+    INTCON.T0IF = 0; // Réinitialisez le drapeau d'interruption
+}
+
+
+void main() {
+    char temp_str[10];
+    char hr_str[10];
+    int temperature, heart_rate;
+
+
+    // Initialize LCD
+    Lcd_Init();
+    Lcd_Cmd(_LCD_CLEAR);
+    Lcd_Cmd(_LCD_CURSOR_OFF);
+
+    // Initialize I/O pins
+    TRISB = 0b11110001; // Set PORTB pins direction
+    TRISA = 0b0010000;
+    TRISE = 0xFF;
+     PORTA.RA0=0;
+     PORTA.RA1=0;
+     TRISD=0;
+
+
+
+     NURSE_LED_RB2 = 0;
+
+    ADC_Init(); // Initialize ADC module
+
+    // Display initial temperature and heart rate
+    temperature = ADC_Read(5)*0.488; // Read from AN0 pin
+    IntToStr(temperature, temp_str);
+    Lcd_Out(1, 1, "Temp:");
+    Lcd_Out(1, 7, temp_str);
+    //Lcd_Out(1, 11, "C");
+    delay_ms(500);
+
+    heart_rate = ADC_Read(6)*0.1; // Read from AN1 pin
+    IntToStr(heart_rate, hr_str);
+    Lcd_Out(2, 1, "HR:");
+    Lcd_Out(2, 5, hr_str);
+    //Lcd_Out(2, 10, "bpm");
+    delay_ms(500);
+
+
+    // Activation des interruptions
+    INTCON.GIE = 1; // Active les interruptions globalement
+    INTCON.INTE = 1; // Active l'interruption externe RB0/INT
+    INTCON.RBIE = 1; // Active l'interruption des changements d'état sur les broches RB
+    INTCON.GIE=1;
+     INTCON.T0IE=1;
+     OPTION_REG=1;
+      OPTION_REG.T0CS=1;
+      OPTION_REG.T0SE=0;
+      TMR0=253;
+MOTOR = 1;
+    while(1) {
+    	
+           // Faire tourner le moteur dans une direction pendant un certain temps
+
+
+         // Temps pendant lequel le moteur tourne
+
+
+
+
+         
+        temperature = ADC_Read(5)*0.488; // Read from AN0 pin
+        // Read heart rate sensor
+        heart_rate = ADC_Read(6)*0.1; // Read from AN1 pin
+
+        // Convert integer values to strings for LCD display
+        IntToStr(temperature, temp_str);
+        IntToStr(heart_rate, hr_str);
+
+        // Clear LCD before displaying new message
+       Lcd_Cmd(_LCD_CLEAR);
+
+        // Display temperature and heart rate on LCD
+
+
+        // Check for critical condition (temperature or heart rate)
+        if (temperature < 35 || temperature > 39) {   // [35,39]
+            // Temperature critical condition detected
+            PORTA.RA0 = 1;
+            delay_ms(100);
+            PORTA.RA1 = 1;
+            delay_ms(100);
+            // Display temperature critical condition message on LCD
+            Lcd_Out(1, 1, "Urgence temp ");
+            Lcd_Out(2, 1, "ch: 1 ");
+            delay_ms(100);
+            PORTA.RA1 = 1;
+         } else if (heart_rate < 60 || heart_rate > 120) {
+            // Heart rate critical condition detected
+            PORTA.RA0 = 1;
+            delay_ms(100);
+            PORTA.RA1 = 1;
+            delay_ms(100);
+            // Display heart rate critical condition message on LCD
+            Lcd_Out(1, 1, "Urgence card");
+            Lcd_Out(2, 1, "ch: 1 ");
+            delay_ms(100);
+
+        } else {
+            // No critical condition, turn off critical LED and buzzer
+            PORTA.RA0 = 0;
+
+            PORTA.RA1 = 0;
+            Lcd_Out(1, 1, "Temp:");
+            Lcd_Out(1, 7, temp_str);
+            Lcd_Out(2, 1, "HR:");
+            Lcd_Out(2, 5, hr_str);
+
+        }
+        // Check for nurse call
+        if (CALL_BUTTON_RB4 || CALL_BUTTON_RB6) {
+            // Nurse called, turn on nurse LED
+            Lcd_Cmd(_LCD_CLEAR);
+
+            NURSE_LED_RB2 = 1;
+            delay_ms(100);
+
+
+            Lcd_Out(1, 2, "Appel infirmier");
+            delay_ms(100);
+
+        }
+        if (RESET_BUTTON_RB5 || RESET_BUTTON_RB7) {
+
+            Lcd_Cmd(_LCD_CLEAR);
+            delay_ms(100);
+
+            Lcd_Out(2, 1, "     reset       ");
+            delay_ms(500);
+            NURSE_LED_RB2 = 0;
+            delay_ms(100);
+
+        }
+
+
+        // Add your logic for other functionality here
+    }
+}

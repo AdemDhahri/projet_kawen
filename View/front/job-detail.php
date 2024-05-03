@@ -2,7 +2,7 @@
 include '../../Model/offre.php';
 include '../../Control/jobControl.php';
 include '../../Model/condidature.php';
-include '../../Control/condida.php';
+include '../../Control/condidaControl.php';
 
 
 
@@ -17,6 +17,63 @@ if (isset($_GET['id'])) {
 
     $offer = $jobController->getOffreById($offer_id);
 }
+
+$error = '';
+$success = false;
+
+
+$condiaControl = new CondidaControl();
+// Check if the form has been submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Vérifier si tous les champs sont remplis
+    if (
+        isset($_POST['CIN']) && !empty($_POST['CIN']) &&
+        isset($_POST['nom']) && !empty($_POST['nom']) &&
+        isset($_POST['prenom']) && !empty($_POST['prenom']) &&
+        isset($_POST['email']) && !empty($_POST['email']) &&
+        isset($_POST['phone']) && !empty($_POST['phone']) &&
+        isset($_FILES['cv']) && !empty($_FILES['cv']) &&
+        isset($_POST['competence']) && !empty($_POST['competence'])
+
+    ) {
+        $folder = "../../upload/";
+
+        $target_file = $folder . basename($_FILES["cv"]["name"]);
+
+        $filType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        if (move_uploaded_file($_FILES["cv"]["tmp_name"], $target_file)) {
+
+            // Créer un tableau avec les détails du job
+            $condidature = new Condidature(
+                $_POST['CIN'],
+                $_POST['nom'],
+                $_POST['prenom'],
+                $_POST['email'],
+                $_POST['phone'],
+                basename($_FILES["cv"]["name"]),
+                $_POST['competence'],
+                "EN COURS"
+            );
+
+            // Ajouter le job à la base de données
+            if ($condiaControl->createC($condidature, $offer_id)) {
+                $success = true;
+                unset($_POST);
+                unset($_FILES);
+                header("Location:lista.php?id_o=$offer_id");
+                $success = false;
+            } else {
+                $error = "Une erreur s'est produite lors de l'ajout de l'offre d'emploi.";
+                unset($_POST);
+                unset($_FILES);
+            }
+        }
+    }
+} else {
+    $error = "Veuillez saisir tout les champs";
+}
+
 
 
 ?>
@@ -92,7 +149,7 @@ if (isset($_GET['id'])) {
                         <div class="dropdown-menu rounded-0 m-0">
                             <a href="category.html" class="dropdown-item">Job Category</a>
                             <a href="testimonial.html" class="dropdown-item"> Nos offres</a>
-                                <a href="404.html" class="dropdown-item">404</a>
+                            <a href="404.html" class="dropdown-item">404</a>
                         </div>
                     </div>
                     <a href="contact.html" class="nav-item nav-link">Contactez-nous</a>
@@ -146,33 +203,39 @@ if (isset($_GET['id'])) {
                             <p><?php echo $offer['description']; ?></p>
                             <h4 class="mb-3">niveau demandé</h4>
                             <p><?php echo $offer['niveau']; ?></p>
-                            
+                             <form action="export.php" method="post">
+        <input type="hidden" name="offer_id" value="<?php echo $offer_id; ?>">
+                                <button type="submit" class="btn btn-primary">Exporter les données de l'offre</button>
+                            </form>
+
                         </div>
 
-                     <div class="">
+                        <div class="">
                             <h4 class="mb-4">Apply For The Job</h4>
-                            <form>
+                            <form id="form" name="form" action="" method="post" enctype="multipart/form-data">
                                 <div class="row g-3">
                                     <div class="col-12 col-sm-6">
-                                        <input type="text" class="form-control" placeholder="Nom">
+                                        <input name="nom" class="form-control" placeholder="Nom">
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <input type="email" class="form-control" placeholder="Prenom">
+                                        <input name="prenom" class="form-control" placeholder="Prenom">
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <input type="text" class="form-control" placeholder="CIN">
+                                        <input type="number" name="CIN" pattern="[0-9]{8}" class="form-control"
+                                            placeholder="CIN">
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <input type="file" class="form-control bg-white">
+                                        <input type="file" name="cv" class="form-control bg-white">
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <input type="text" class="form-control" placeholder="Telephone">
+                                        <input name="phone" type="tel" class="form-control" placeholder="Telephone">
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <input type="email" class="form-control" placeholder="Email">
+                                        <input type="email" name="email" class="form-control" placeholder="Email">
                                     </div>
                                     <div class="col-12">
-                                        <textarea class="form-control" rows="5" placeholder="Compétences"></textarea>
+                                        <textarea name="competence" class="form-control" rows="5"
+                                            placeholder="Compétences"></textarea>
                                     </div>
                                     <div class="col-12">
                                         <button class="btn btn-primary w-100" type="submit">Apply Now</button>
@@ -185,14 +248,26 @@ if (isset($_GET['id'])) {
                     <div class="col-lg-4">
                         <div class="bg-light rounded p-5 mb-4 wow slideInUp" data-wow-delay="0.1s">
                             <h4 class="mb-4">Job Summery</h4>
-                            <p><i class="fa fa-angle-right text-primary me-2"></i>Published On: <?php echo $offer['date_p']; ?></p>
-                            <p><i class="fa fa-angle-right text-primary me-2"></i>Email du recruteur:<?php echo $offer['email_r']; ?>  </p>
-                            <p><i class="fa fa-angle-right text-primary me-2"></i>Horaire: <?php echo $offer['horaire']; ?></p>
-                            <p><i class="fa fa-angle-right text-primary me-2"></i>Salarie: <?php echo $offer['salaire']; ?> DT</p>
-                            <p><i class="fa fa-angle-right text-primary me-2"></i>Location:<?php echo $offer['localisation']; ?></p>
-                            
+                            <p><i class="fa fa-angle-right text-primary me-2"></i>Published On:
+                                <?php echo $offer['date_p']; ?>
+                            </p>
+                            <p><i class="fa fa-angle-right text-primary me-2"></i>Email du
+                                recruteur:<?php echo $offer['email_r']; ?> </p>
+                            <p><i class="fa fa-angle-right text-primary me-2"></i>Horaire:
+                                <?php echo $offer['horaire']; ?>
+                            </p>
+                            <p><i class="fa fa-angle-right text-primary me-2"></i>Salarie:
+                                <?php echo $offer['salaire']; ?> DT
+                            </p>
+                            <p><i
+                                    class="fa fa-angle-right text-primary me-2"></i>Location:<?php echo $offer['localisation']; ?>
+                            </p>
+                            <p><i class="fa fa-angle-right text-primary me-2"></i>nombre des Places
+                                disponibles:<?php echo $offer['nbrP']; ?>
+                            </p>
+
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

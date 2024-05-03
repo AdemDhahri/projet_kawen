@@ -1,53 +1,75 @@
 <?php
+
 include '../../Model/offre.php';
 include '../../Control/jobControl.php';
+include '../../Model/condidature.php';
+include '../../Control/condidaControl.php';
 
-$error = '';
-$success = false;
 
+// Check if the ID parameter is set in the URL
+if (isset($_GET['id'])) {
+    // Retrieve the ID from the URL
+    $offer_id = $_GET['id'];
 
-$jobController = new JobControl();
+    // Créer une instance de la classe JobControl
+    $jobController = new JobControl();
+
+    $offer = $jobController->getOffreById($offer_id);
+}
+
+$condiaControl = new CondidaControl();
 // Check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Vérifier si tous les champs sont remplis
     if (
-        isset($_POST['titre']) && !empty($_POST['titre']) &&
-        isset($_POST['email_r']) && !empty($_POST['email_r']) &&
-        isset($_POST['salaire']) && !empty($_POST['salaire']) &&
-        isset($_POST['localisation']) && !empty($_POST['localisation']) &&
-        isset($_POST['horaire']) && !empty($_POST['horaire']) &&
-        isset($_POST['description']) && !empty($_POST['description']) &&
-        isset($_POST['niveau']) && !empty($_POST['niveau'])&&
-        isset($_POST['nbrP']) && !empty($_POST['nbrP'])
-    ) {
-        // Créer un tableau avec les détails du job
-        $jobDetails = new Offre(
-            $_POST['titre'],
-            $_POST['email_r'],
-            $_POST['salaire'],
-            $_POST['localisation'],
-            $_POST['horaire'],
-            $_POST['description'],
-            $_POST['niveau'],
-            null,
-            $_POST['nbrP'],
-        );
+        isset($_POST['CIN']) && !empty($_POST['CIN']) &&
+        isset($_POST['nom']) && !empty($_POST['nom']) &&
+        isset($_POST['prenom']) && !empty($_POST['prenom']) &&
+        isset($_POST['email']) && !empty($_POST['email']) &&
+        isset($_POST['phone']) && !empty($_POST['phone']) &&
+        isset($_FILES['cv']) && !empty($_FILES['cv']) &&
+        isset($_POST['competence']) && !empty($_POST['competence'])
 
-        // Ajouter le job à la base de données
-        if ($jobController->createOffre($jobDetails)) {
-            $success = true;
-            unset($_POST);
-            header('Location:job-list.php');
-            $success = false;
+    ) {
+        $folder = "../../upload/";
+
+        $target_file = $folder . basename($_FILES["cv"]["name"]);
+
+        $filType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        if (move_uploaded_file($_FILES["cv"]["tmp_name"], $target_file)) {
+
+            // Créer un tableau avec les détails du job
+            $condidature = new Condidature(
+                $_POST['CIN'],
+                $_POST['nom'],
+                $_POST['prenom'],
+                $_POST['email'],
+                $_POST['phone'],
+                basename($_FILES["cv"]["name"]),
+                $_POST['competence'],
+                "EN COURS"
+            );
+
+            // Ajouter le job à la base de données
+            if ($condiaControl->updateC($offer_id, $jobDetails)) {
+                $success = true;
+                unset($_POST);
+                header('Location:lista.php');
+                $success = false;
+            } else {
+                $error = "Une erreur s'est produite lors de l'ajout de l'offre d'emploi.";
+                unset($_POST);
+            }
         } else {
-            $error = "Une erreur s'est produite lors de l'ajout de l'offre d'emploi.";
-            unset($_POST);
+            $error = "Veuillez saisir tout les champs";
         }
-    } else {
-        $error = "Veuillez saisir tout les champs";
     }
+} else {
+    $error = "Veuillez saisir tout les champs";
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -146,7 +168,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Jobs Start -->
         <div class="container-xxl py-5">
             <div class="container">
-                <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Add job</h1>
+                <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Modifier informations</h1>
                 <?php
                 if (!empty($error))
                     echo '<div class="alert alert-danger" role="alert">
@@ -155,72 +177,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         ?>
 
                     <form id="form" name="form" action="#" method="post">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="titre" name="titre" placeholder="Title"
-                                        required>
-                                    <label for="titre">Titre de l'offre</label>
+                        <div class="">
+                            
+                            <form id="form" name="form" action="" method="post" enctype="multipart/form-data">
+                                <div class="row g-3">
+                                    <div class="col-12 col-sm-6">
+                                        <input name="nom" class="form-control" placeholder="Nom">
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <input name="prenom" class="form-control" placeholder="Prenom">
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <input type="number" name="CIN" pattern="[0-9]{8}" class="form-control"
+                                            placeholder="CIN">
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <input type="file" name="cv" class="form-control bg-white">
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <input name="phone" type="tel" class="form-control" placeholder="Telephone">
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <input type="email" name="email" class="form-control" placeholder="Email">
+                                    </div>
+                                    <div class="col-12">
+                                        <textarea name="competence" class="form-control" rows="5"
+                                            placeholder="Compétences"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100" type="submit">Modifier</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control" id="email_r" name="email_r"
-                                        placeholder="Your Email" required>
-                                    <label for="email_r">Email du recruteur</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input pattern="[0-9]*" min="0"  type="number" class="form-control" id="salaire" name="salaire" placeholder="Salary"
-                                        required>
-                                    <label for="salaire">Salaire</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <select class="form-select" id="horaire" name="horaire" aria-label="Select Schedule"
-                                        required>
-                                        <option selected disabled>Select Schedule</option>
-                                        <option value="part-time">Part-time</option>
-                                        <option value="full-time">Full-time</option>
-                                    </select>
-                                    <label for="horaire">Horaire</label>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="localisation" name="localisation"
-                                        placeholder="Location" required>
-                                    <label for="localisation">Localisation</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="niveau" name="niveau"
-                                        placeholder="Experience" required>
-                                    <label for="niveau">Niveau d'expérience requis</label>
-                                </div>
-                            </div>
-                             <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input pattern="[0-100]*" min="1"  type="number" class="form-control" id="nbrP" name="nbrP" placeholder="Postes dispo"
-                                        required>
-                                    <label for="nbrP">Postes</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a message here" id="description"
-                                        name="description" style="height: 150px" required></textarea>
-                                    <label for="description">Description</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <!-- <button class="btn btn-primary w-100 py-3" type="submit">Post job</button> -->
-                                <input type="submit" class="btn btn-primary w-100 py-3" value="Post job">
-                            </div>
+                            </form>
                         </div>
                     </form>
 
@@ -315,7 +303,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Template Javascript -->
         <script src="../../assests/front/js/main.js"></script>
 
-      
-</body>
 
-</html>
+    </body>
+
+    </html>

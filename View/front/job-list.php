@@ -208,12 +208,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             </button>
                                             <button type="button" class="btn btn-dark">
                                                 <a href="job-detail.php?id=<?php echo $offre['id_o']; ?>">
-                                                <i class="fa-solid fa-info"></i>
+                                                    <i class="fa-solid fa-info"></i>
                                             </button>
                                             <form action="" id="deleteForm" name="deleteForm" method="post">
                                                 <input type="hidden" name="id" value="<?php echo $offre['id_o']; ?>">
                                                 <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                                             </form>
+
+
                                         </div>
                                     </td>
                                 </tr>

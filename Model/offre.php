@@ -13,8 +13,10 @@ class Offre
     private $niveau;
     private $date_p;
 
+    private $nbrP;
+
     // Constructor
-    public function __construct($titre, $email_r, $salaire, $localisation, $horaire, $description, $niveau, $date_p)
+    public function __construct($titre, $email_r, $salaire, $localisation, $horaire, $description, $niveau, $date_p, $nbrP)
     {
         $this->titre = $titre;
         $this->email_r = $email_r;
@@ -24,6 +26,7 @@ class Offre
         $this->description = $description;
         $this->niveau = $niveau;
         $this->date_p = $date_p;
+        $this->nbrP = $nbrP;
     }
 
     // Getter and Setter methods...
@@ -55,7 +58,7 @@ class Offre
 
     function set_salaire($salaire)
     {
-        $this->salair = $salaire;
+        $this->salaire = $salaire;
     }
 
     function get_salaire()
@@ -106,5 +109,14 @@ class Offre
     function get_date_p()
     {
         return $this->date_p;
+    }
+
+    function set_nbrP($nbrP)
+    {
+        $this->nbrP = $nbrP;
+    }
+    function get_nbrP()
+    {
+        return $this->nbrP;
     }
 }

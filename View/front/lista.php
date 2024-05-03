@@ -1,33 +1,41 @@
 <?php
 // Inclure le fichier jobControl.php
 include '../../Model/offre.php';
+include '../../Control/condidaControl.php';
+include '../../Model/condidature.php';
 include '../../Control/jobControl.php';
 
+// Check if the ID parameter is set in the URL
+if (isset($_GET['id_o'])) {
+    // Retrieve the ID from the URL
+    $offer_id = $_GET['id_o'];
+
+    // Créer une instance de la classe JobControl
+    $jobController = new JobControl();
+
+    $offer = $jobController->getOffreById($offer_id);
+}
+
 // Créer une instance de la classe JobControl
-$jobController = new JobControl();
+$condidaControl = new CondidaControl();
 
 // Appeler la méthode getAllOffres() pour récupérer toutes les offres d'emploi
-$offres = $jobController->getAllOffres();
-
+$condidats = $condidaControl->getAllCByOffer($offer_id);
 
 // Vérification de la requête POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupération de l'ID de l'offre à supprimer
 
-    if (isset($_POST["id"])) {
+    if (isset($_POST["CIN"])) {
 
-        $id = $_POST['id'];
+        $CIN = $_POST['CIN'];
 
-        echo $id;
-
-        // Création d'une instance de JobControl
-        $jobControl = new JobControl();
 
         // Suppression de l'offre
-        if ($jobControl->deleteOffre($id)) {
+        if ($condidaControl->deleteC($CIN)) {
             // Redirection vers job-list.php après la suppression
-            $offres = array_filter($offres, function ($job) use ($id) {
-                return $job['id_o'] != $id;
+            $condidats = array_filter($condidats, function ($job) use ($CIN) {
+                return $job['cin'] != $CIN;
             });
         } else {
             // Gestion de l'erreur en cas d'échec de la suppression
@@ -35,6 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+
+
 ?>
 
 
@@ -77,6 +87,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Template Stylesheet -->
     <link href="../../assests/front/css/style.css" rel="stylesheet">
     <link href="../../assests/front/css/job-list.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        $(document).ready(function () {
+            $('.decrease-posts').click(function () {
+                const offerId = $(this).data('offer-id');
+                const condId = $(this).data('cond-id');
+
+                $.ajax({
+                    url: 'decrease_posts.php',
+                    type: 'POST',
+                    data: { offer_id: offerId, condidatCIN: condId },
+                    success: function (response) {
+                        // Mettez à jour l'interface utilisateur si nécessaire
+                        Swal.fire({
+                            title: "Success",
+                            text: "Condida accepté!",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.reload();
+                            }
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        Swal.fire({
+                            title: "Erreur",
+                            text: "Une erreur s'est produite!",
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
 </head>
 
 <body>
@@ -125,107 +173,85 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Header End -->
         <div class="container-xxl py-5 bg-dark page-header mb-5">
             <div class="container my-5 pt-5 pb-4">
-                <h1 class="display-3 text-white mb-3 animated slideInDown">Job List</h1>
+                <h1 class="display-3 text-white mb-3 animated slideInDown">List des condidatures de cet offre</h1>
                 <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb text-uppercase">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                        <li class="breadcrumb-item text-white active" aria-current="page">Job List</li>
-                    </ol>
+
                 </nav>
             </div>
         </div>
         <!-- Header End -->
 
-        <div class="container text-center mb-5">
-            <a href="addjob.php" class="btn btn-primary">Add Job</a>
-        </div>
+
 
         <!-- Jobs Start -->
-        <div class="container-xxl py-5">
-            <div class="row">
-                <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Job Listing</h1>
-                <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
-                    <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
-                        <li class="nav-item">
-                            <a class="d-flex align-items-center text-start mx-3 ms-0 pb-3 active" data-bs-toggle="pill"
-                                href="#tab-1" data-bs-target="#tab-1">
-                                <h6 class="mt-n1 mb-0">Featured</h6>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="d-flex align-items-center text-start mx-3 pb-3" data-bs-toggle="pill"
-                                href="#tab-2" data-bs-target="#tab-2">
-                                <h6 class="mt-n1 mb-0">Full Time</h6>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill"
-                                href="#tab-3" data-bs-target="#tab-3">
-                                <h6 class="mt-n1 mb-0">Part Time</h6>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row">
-                <div id="tab-1">
-                    <!-- Tableau HTML pour afficher les offres -->
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Titre de l'offre</th>
-                                <th scope="col">Email du recruteur</th>
-                                <th scope="col">Salaire</th>
-                                <th scope="col">Localisation</th>
-                                <th scope="col">Horaire</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            // Récupérer toutes les offres depuis la base de données
-                            $jobControl = new JobControl();
-                            $offres = $jobControl->getAllOffres();
 
-                            // Afficher chaque offre dans une ligne du tableau
-                            foreach ($offres as $index => $offre) {
-                                ?>
-                                <tr>
-                                    <td><?php echo $offre['titre']; ?></td>
-                                    <td><?php echo $offre['email_r']; ?></td>
-                                    <td><?php echo $offre['salaire']; ?></td>
-                                    <td><?php echo $offre['localisation']; ?></td>
-                                    <td><?php echo $offre['horaire']; ?></td>
+        <div class="row">
+            <div id="tab-1">
+                <!-- Tableau HTML pour afficher les offres -->
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">titre d'offre</th>
+                            <th scope="col">nom</th>
+                            <th scope="col">prenom</th>
+                            <th scope="col">mail</th>
+                            <th scope="col">phone</th>
+                            <th scope="col">cv</th>
+                            <th scope="col">competence</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
 
-                                    <td>
-                                        <div class="btn-row">
-                                            <!-- Ajouter ici les boutons pour les actions -->
-                                            <button type="button" class="btn btn-primary">
-                                                <a href="modifier.php?id=<?php echo $offre['id_o']; ?>">
-                                                    <i class="fa-solid fa-pen-to-square"></i>
-                                                </a>
-                                            </button>
-                                            <button type="button" class="btn btn-dark">
-                                                <a href="job-detail.php?id=<?php echo $offre['id_o']; ?>">
-                                                    <i class="fa-solid fa-info"></i>
-                                            </button>
-                                            <form action="" id="deleteForm" name="deleteForm" method="post">
-                                                <input type="hidden" name="id" value="<?php echo $offre['id_o']; ?>">
-                                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <?php
-                            }
+                        // Afficher chaque offre dans une ligne du tableau
+                        foreach ($condidats as $index => $condidat) {
                             ?>
-                        </tbody>
-                    </table>
+                            <tr>
+                                <td><?php echo $condidat['titre']; ?></td>
+                                <td><?php echo $condidat['nom']; ?></td>
+                                <td><?php echo $condidat['prenom']; ?></td>
+                                <td><?php echo $condidat['email']; ?></td>
+                                <td><?php echo $condidat['phone']; ?></td>
+                                <td><?php echo $condidat['cv']; ?></td>
+                                <td><?php echo $condidat['competence']; ?></td>
 
-                </div>
+                                <td>
+                                    <div class="btn-row">
+                                        <?php
+                                        if ($condidat['etat_C'] != 'A') { ?>
+                                            <!-- Ajouter ici les boutons pour les actions -->
+                                            <button type="button" class="btn btn-primary decrease-posts"
+                                                data-offer-id="<?php echo $condidat['id_o']; ?>"
+                                                data-cond-id="<?php echo $condidat["cin"]; ?>">
+                                                <i class="far fa-check-circle"></i>
+                                            </button>
+                                        <?php } ?>
+
+                                        <button type="button" class="btn btn-primary">
+                                            <a href="modifierCondida.php?cin=<?php echo $condidat['cin']; ?>">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                        </button>
+
+                                        <form action="" id="deleteForm" name="deleteForm" method="post">
+                                            <input type="hidden" name="CIN" value="<?php echo $condidat['cin']; ?>">
+                                            <button class="btn btn-danger">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+
             </div>
         </div>
+    </div>
     </div>
     <!-- Jobs End -->
 
@@ -314,13 +340,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="../../assests/front/js/main.js"></script>
 
     <?php
-    // Inclure le fichier jobControl.php et les autres dépendances nécessaires
-    include_once "../../Control/jobControl.php";
-
     // Vérifier si l'offre a été publiée avec succès
     if (isset($success) && $success) {
         echo '
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             Swal.fire({

@@ -9,10 +9,14 @@ class Condidature
     private $email;
     private $phone;
     private $cv;
+
+    private $competence;
+
+    private $etat_C;
    
 
     // Constructor
-    public function __construct($CIN, $nom, $prenom,$email,$phone,$cv)
+    public function __construct($CIN, $nom, $prenom,$email,$phone,$cv,$competence,$etat_C)
     {
         $this->CIN = $CIN;
         $this->nom = $nom;
@@ -20,6 +24,8 @@ class Condidature
         $this->email = $email;
         $this->phone = $phone;
         $this->cv = $cv;
+        $this->competence = $competence;
+        $this->etat_C =$etat_C;
      
     }
 
@@ -77,6 +83,26 @@ class Condidature
     function get_cv()
     {
         return $this->cv;
+    }
+
+    function set_competence($competence)
+    {
+        $this->competence = $competence;
+    }
+
+    function get_competence()
+    {
+        return $this->competence;
+    }
+
+    function set_etat_C($etat_C)
+    {
+        $this->etat_C = $etat_C;
+    }
+
+    function get_etat_C()
+    {
+        return $this->etat_C;
     }
 
     

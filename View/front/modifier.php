@@ -25,7 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         isset($_POST['localisation']) && !empty($_POST['localisation']) &&
         isset($_POST['horaire']) && !empty($_POST['horaire']) &&
         isset($_POST['description']) && !empty($_POST['description']) &&
-        isset($_POST['niveau']) && !empty($_POST['niveau'])
+        isset($_POST['niveau']) && !empty($_POST['niveau'])&&
+        isset($_POST['nbrP']) && !empty($_POST['nbrP'])
     ) {
         // Créer un tableau avec les détails du job
         $jobDetails = new Offre(
@@ -36,7 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_POST['horaire'],
             $_POST['description'],
             $_POST['niveau'],
-            null
+            null,
+            $_POST['nbrP'],
         );
 
         // Ajouter le job à la base de données
@@ -149,86 +151,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         <!-- Jobs Start -->
-        <div class="container-xxl py-5">
-            <div class="container">
-                <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Edit job</h1>
-                <?php
-                if (!empty($error))
-                    echo '<div class="alert alert-danger" role="alert">
-                    ' . $error . '
-                </div>'
-                        ?>
-
-                    <form id="form" name="form" action="#" method="post">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="text" value="<?php echo $offer['titre'] ?>" class="form-control" id="titre"
-                                    name="titre" placeholder="Title" required>
-                                <label for="titre">Titre de l'offre</label>
-                            </div>
+        <div class="">
+                            <h4 class="mb-4">Apply For The Job</h4>
+                            <form id="form" name="form" action="" method="post" enctype="multipart/form-data">
+                                <div class="row g-3">
+                                    <div class="col-12 col-sm-6">
+                                        <input name="nom" class="form-control" placeholder="Nom">
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <input name="prenom" class="form-control" placeholder="Prenom">
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <input type="number" name="CIN" pattern="[0-9]{8}" class="form-control"
+                                            placeholder="CIN">
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <input type="file" name="cv" class="form-control bg-white">
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <input name="phone" type="tel" class="form-control" placeholder="Telephone">
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <input type="email" name="email" class="form-control" placeholder="Email">
+                                    </div>
+                                    <div class="col-12">
+                                        <textarea name="competence" class="form-control" rows="5"
+                                            placeholder="Compétences"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100" type="submit">Apply Now</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="email" value="<?php echo $offer['email_r'] ?>" class="form-control"
-                                    id="email_r" name="email_r" placeholder="Your Email" required>
-                                <label for="email_r">Email du recruteur</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input pattern="[0-9]*" type="number" min="0" value="<?php echo $offer['salaire'] ?>" class="form-control"
-                                    id="salaire" name="salaire" placeholder="Salary" required>
-                                <label for="salaire">Salaire</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <select class="form-select" id="horaire" name="horaire" aria-label="Select Schedule"
-                                    required>
-                                    <option value="part-time" <?= $offer["horaire"] == 'part-time' ? ' selected="selected"' : ''; ?>>Part-time</option>
-                                    <option value="full-time" <?= $offer["horaire"] == 'full-time' ? ' selected="selected"' : ''; ?>>Full-time</option>
-                                    <!-- <option selected disabled>Select Schedule</option>
-                                    <option value="part-time">Part-time</option>
-                                    <option value="full-time">Full-time</option> -->
-                                </select>
-                                <label for="horaire">Horaire</label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" value="<?php echo $offer['localisation'] ?>" class="form-control"
-                                    id="localisation" name="localisation" placeholder="Location" required>
-                                <label for="localisation">Localisation</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" value="<?php echo $offer['niveau'] ?>" class="form-control"
-                                    id="niveau" name="niveau" placeholder="Experience" required>
-                                <label for="niveau">Niveau d'expérience requis</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <textarea class="form-control" placeholder="Leave a message here" id="description"
-                                    name="description" style="height: 150px" required>
-                                        <?php echo htmlspecialchars($offer['description']) ?>
-                                    </textarea>
-                                <label for="description">Description</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <!-- <button class="btn btn-primary w-100 py-3" type="submit">Post job</button> -->
-
-                            <input type="submit" class="btn btn-primary w-100 py-3" value="Edit job">
-                        </div>
-                    </div>
-                </form>
-
-            </div>
-        </div>
         <!-- Jobs End -->
 
 

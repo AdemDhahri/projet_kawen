@@ -1,31 +1,41 @@
 <?php
 // Inclure le fichier jobControl.php
 include '../../Model/offre.php';
+include '../../Control/condidaControl.php';
+include '../../Model/condidature.php';
 include '../../Control/jobControl.php';
 
+// Check if the ID parameter is set in the URL
+if (isset($_GET['id_o'])) {
+    // Retrieve the ID from the URL
+    $offer_id = $_GET['id_o'];
+
+    // Créer une instance de la classe JobControl
+    $jobController = new JobControl();
+
+    $offer = $jobController->getOffreById($offer_id);
+}
+
 // Créer une instance de la classe JobControl
-$jobController = new JobControl();
+$condidaControl = new CondidaControl();
 
 // Appeler la méthode getAllOffres() pour récupérer toutes les offres d'emploi
-$offres = $jobController->getAllOffres();
-
+$condidats = $condidaControl->getAllC();
 
 // Vérification de la requête POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupération de l'ID de l'offre à supprimer
 
-    if (isset($_POST["id"])) {
+    if (isset($_POST["CIN"])) {
 
-        $id = $_POST['id'];
+        $CIN = $_POST['CIN'];
 
-        // Création d'une instance de JobControl
-        $jobControl = new JobControl();
 
         // Suppression de l'offre
-        if ($jobControl->deleteOffre($id)) {
+        if ($condidaControl->deleteC($CIN)) {
             // Redirection vers job-list.php après la suppression
-            $offres = array_filter($offres, function ($job) use ($id) {
-                return $job['id_o'] != $id;
+            $condidats = array_filter($condidats, function ($job) use ($CIN) {
+                return $job['cin'] != $CIN;
             });
         } else {
             // Gestion de l'erreur en cas d'échec de la suppression
@@ -163,12 +173,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <span>Charts</span></a>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item ">
                 <a class="nav-link" href="offres.php">
                     <i class="fas fa-briefcase"></i>
                     <span>Offres de travail</span></a>
             </li>
-            <li class="nav-item ">
+
+            <li class="nav-item active">
                 <a class="nav-link" href="condidature.php">
                     <i class="fas fa-user-check"></i>
                     <span>Les condidatures</span></a>
@@ -407,80 +418,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Offres de travail</h1>
 
-                    <div class="row">
-                        <div id="tab-1">
-                            <!-- Tableau HTML pour afficher les offres -->
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Titre de l'offre</th>
-                                        <th scope="col">Email du recruteur</th>
-                                        <th scope="col">Salaire</th>
-                                        <th scope="col">Localisation</th>
-                                        <th scope="col">Horaire</th>
-                                        <th scope="col">Niveau</th>
-                                        <th scope="col">Discription</th>
-                                        <th scope="col">Date de creation</th>
-                                        <th scope="col">Postes dispo</th>
-                                        <th scope="col">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-
-
-                                    // Afficher chaque offre dans une ligne du tableau
-                                    foreach ($offres as $index => $offre) {
-                                        ?>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
                                         <tr>
-                                            <td>
-                                                <?php echo $offre['titre']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $offre['email_r']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $offre['salaire']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $offre['localisation']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $offre['horaire']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $offre['niveau']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $offre['description']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $offre['date_p']; ?>
-                                            </td>
-
-                                            <td>
-                                                <?php echo $offre['nbrP']; ?>
-                                            </td>
-
-                                            <td>
-                                                <div class="btn-row">
-
-                                                    <form action="" id="deleteForm" name="deleteForm" method="post">
-                                                        <input type="hidden" name="id"
-                                                            value="<?php echo $offre['id_o']; ?>">
-                                                        <button class="btn btn-danger btn-circle">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
+                                            <th scope="col">titre d'offre</th>
+                                            <th scope="col">nom</th>
+                                            <th scope="col">prenom</th>
+                                            <th scope="col">mail</th>
+                                            <th scope="col">phone</th>
+                                            <th scope="col">cv</th>
+                                            <th scope="col">competence</th>
+                                            <th scope="col">Actions</th>
                                         </tr>
                                         <?php
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
 
+                                        // Afficher chaque offre dans une ligne du tableau
+                                        foreach ($condidats as $index => $condidat) {
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $condidat['titre']; ?></td>
+                                                <td><?php echo $condidat['nom']; ?></td>
+                                                <td><?php echo $condidat['prenom']; ?></td>
+                                                <td><?php echo $condidat['email']; ?></td>
+                                                <td><?php echo $condidat['phone']; ?></td>
+                                                <td><?php echo $condidat['cv']; ?></td>
+                                                <td><?php echo $condidat['competence']; ?></td>
+
+                                                <td>
+                                                    <div class="btn-row">
+
+
+                                                        <form action="" id="deleteForm" name="deleteForm" method="post">
+                                                            <input type="hidden" name="CIN"
+                                                                value="<?php echo $condidat['cin']; ?>">
+                                                            <button class="btn btn-danger">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                        </tbody>
+
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

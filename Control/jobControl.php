@@ -6,9 +6,10 @@ class JobControl
 {
     public function createOffre(Offre $jobDetails)
     {
+        var_dump($jobDetails);
         // Insert into the database
-        $sql = "INSERT INTO offres (titre, email_r, salaire, localisation, horaire, description, niveau) 
-                VALUES (:titre, :email_r, :salaire, :localisation, :horaire, :description, :niveau)";
+        $sql = "INSERT INTO offres (titre, email_r, salaire, localisation, horaire, description, niveau, nbrP) 
+                VALUES (:titre, :email_r, :salaire, :localisation, :horaire, :description, :niveau, :nbrP)";
 
         try {
 
@@ -21,7 +22,8 @@ class JobControl
                 ':localisation' => $jobDetails->get_localisation(),
                 ':horaire' => $jobDetails->get_horaire(),
                 ':description' => $jobDetails->get_description(),
-                ':niveau' => $jobDetails->get_niveau()
+                ':niveau' => $jobDetails->get_niveau(),
+                ':nbrP' => $jobDetails->get_nbrP()
             ]);
 
         } catch (PDOException $e) {
@@ -46,7 +48,7 @@ class JobControl
 
         try {
             $stmt = $db->prepare($sql);
-            $stmt->execute(['id'=> $id]);
+            $stmt->execute(['id' => $id]);
             return true;
         } catch (PDOException $e) {
             echo 'Erreur: ' . $e->getMessage();
@@ -57,7 +59,7 @@ class JobControl
     {
         $db = config::getConnexion();
         $query = $db->prepare("SELECT * FROM offres WHERE id_o = :id");
-        $query->execute([":id"=> $id]);
+        $query->execute([":id" => $id]);
         return $query->fetch(PDO::FETCH_ASSOC);
     }
     public function updateOffre(string $id, Offre $jobDetails)
@@ -66,7 +68,7 @@ class JobControl
         $sql = "UPDATE offres 
                 SET titre = :titre, email_r = :email_r, salaire = :salaire, 
                     localisation = :localisation, horaire = :horaire, 
-                    description = :description, niveau = :niveau 
+                    description = :description, niveau = :niveau, nbrP = :nbrP 
                 WHERE id_o = :id";
 
         try {
@@ -82,11 +84,25 @@ class JobControl
                 ':localisation' => $jobDetails->get_localisation(),
                 ':horaire' => $jobDetails->get_horaire(),
                 ':description' => $jobDetails->get_description(),
-                ':niveau' => $jobDetails->get_niveau()
+                ':niveau' => $jobDetails->get_niveau(),
+                ':nbrP' => $jobDetails->get_nbrP()
             ]);
         } catch (PDOException $e) {
             // Gestion des erreurs de base de données
             echo 'Erreur: ' . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function decrementNumberOfAvailablePosts(string $id)
+    {
+        $sql = "UPDATE offres SET nbrP = nbrP - 1 WHERE id_o = :id AND nbrP > 0";
+
+        try {
+            $stmt = config::getConnexion()->prepare($sql);
+            return $stmt->execute([":id" => $id]);
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
             return false;
         }
     }
