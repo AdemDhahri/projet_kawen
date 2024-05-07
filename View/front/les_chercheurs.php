@@ -1,10 +1,24 @@
 <?php
 include('../../Model/chercheur.php');
+include('../../Model/commentaire.php');
 
-
+include('../../Control/actions/add_commentaire.php');
+include('../../Control/actions/Show_commentaire.php');
 include('../../Control/actions/ShowJobsAction.php');
-include('../../Control/actions/DeleteJobAction.php');
 
+$events = array();
+if (!empty($tab) && is_array($tab)) {
+    foreach ($tab as $event) {
+        $events[] = array(
+            'nom' => $event['nom'],
+            'prenom' => $event['prenom'],
+            'latitude' => $event['latitude'],
+            'longitude' => $event['longitude']
+        );
+    }
+} else {
+ 
+}$events_json = json_encode($events);
 
 ?>
 <!DOCTYPE html>
@@ -16,7 +30,12 @@ include('../../Control/actions/DeleteJobAction.php');
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
     <!-- Favicon -->
     <link href="../../assests/front/img/favicon.ico" rel="icon">
 
@@ -128,69 +147,69 @@ include('../../Control/actions/DeleteJobAction.php');
                     </ul>
                     <div class="tab-content">
                         <div id="tab-1" class="tab-pane fade show p-0 active">
-                            <!-- 
-                            foreach ($Recruiters as $key => $Recruiter) {
-                            <div class="job-item p-4 mb-4">
-                                    <div class="row g-4">
-                                        <div class="col-sm-12 col-md-8 d-flex align-items-center">
-                                            <img class="flex-shrink-0 img-fluid border rounded" src="../../assests/front/img/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
-                                            <div class="text-start ps-4">
-                                                <h5 class="mb-3"><?= $Recruiter['nom'] ?></h5>
-                                                <span class="text-truncate me-3">📞</span>
-                                                <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>Full Time</span>
-                                                <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>$123 -
-                                                    $456</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                                            <div class="d-flex mb-3">
-                                                <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a>
-                                                <a class="btn btn-primary" href="">Apply Now</a>
-                                            </div>
-                                            <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date Line: 01 Jan,
-                                                2045</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                            print_r($Recruiters)
-
-
-                             -->
-                             <?php foreach ($Recruiters as $key => $Recruiter) { ?>
+                            
+                        <?php foreach ($Recruiters as $key => $Recruiter) { 
+?>
     <div class="job-item p-4 mb-4">
         <div class="row g-4">
+            <!-- Colonne pour les détails du recruteur -->
             <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                <!-- Logo de l'entreprise -->
                 <img class="flex-shrink-0 img-fluid border rounded" src="../../assests/front/img/com-logo-1.jpg" alt="" style="width: 100px; height: 100px;">
                 <div class="text-start ps-4">
+                    <!-- Nom et prénom du recruteur -->
                     <h5 class="mb-3"><?= $Recruiter['nom']." ".$Recruiter['prenom'] ?></h5>
-                    <p class="mb-1"><strong>Téléphone:</strong> <?= $Recruiter['tel'] ?></p>
-                    <p class="mb-1"><strong>ville:</strong> <?= $Recruiter['ville'] ?></p>
-
+                    <!-- Informations de contact du recruteur -->
+                    <p class="mb-1"><strong>Téléphone:</strong> <a href="https://wa.me/<?= $Recruiter['tel'] ?>?tel=<?= $Recruiter['tel'] ?>"><?= $Recruiter['tel'] ?></a></p>
                     <p class="mb-1"><strong>Email:</strong> <?= $Recruiter['mail'] ?></p>
-
-                    <p class="mb-1"><strong>CV:</strong> <?= $Recruiter['cv'] ?></p>
+                   <p><strong>Ville:</strong> <a href="https://www.google.com/maps/search/<?= urlencode($Recruiter['ville']) ?>"> <?= htmlspecialchars($Recruiter['ville']) ?></a></p>
+<p class="mb-1"><strong>CV:</strong> <?= $Recruiter['cv'] ?></p>
+                    
+                    <!-- Bouton pour afficher les détails supplémentaires -->
                     <button class="btn btn-primary btn-sm mt-3 toggle-details">Plus</button>
-                    <!-- Additional attributes will be toggled by JavaScript -->
+                    <!-- Div pour les détails supplémentaires, initialement masqués -->
+                    
                     <div class="additional-details" style="display: none;">
-                        <hr>
-                        <p class="mb-1"><strong>lettre de motivation:</strong> <?= $Recruiter['l_d_v'] ?></p>
+                    <br>
+                        <!-- Lettre de motivation et message du recruteur -->
+                        <p class="mb-1"><strong>Lettre de motivation:</strong> <?= $Recruiter['l_d_v'] ?></p>
                         <p class="mb-1"><strong>Message:</strong> <?= $Recruiter['message'] ?></p>
+                    
+                        <!-- Commentaires -->
+                        <hr>
+                        <a href="page_co.php?id=<?= $Recruiter['id_c'] ?>" class="dropdown-item">voir commentaires:</a>                       
                     </div>
                 </div>
             </div>
+            <!-- Colonne pour les actions -->
             <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                <!-- Actions -->
                 <div class="d-flex mb-3">
                     <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a>
-                    <a class="btn btn-secondary me-3" href="../../Control/actions/DeleteJobAction.php?id=<?= $Recruiter['id_c']; ?>" name="delete_id" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce poste ?');">Supprimer</a>
-                    <a class="btn btn-primary me-3" href="../../View/front/modifier.php?id=<?= $Recruiter['id_c']; ?>" name="modifier_id" onclick="return confirm('Êtes-vous sûr de vouloir modifier ce poste ?');">Modifier</a>
                 </div>
-                <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date Line: 01 Jan, 2045</small>
+                <!-- Date limite -->
+                
+                <!-- Formulaire pour ajouter un commentaire -->
+                <form action="../../Control/actions/add_commentaire.php?id=<?= $Recruiter['id_c'] ?>" method="post">
+                    <div class="row mt-3">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="commentaire">Commentaire :</label>
+                                <textarea class="form-control" id="commentaire" name="commentaire" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" name="submit" class="btn btn-primary mt-4">Ajouter</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            
         </div>
     </div>
+    
 <?php } ?>
+
+   
 
 <script>
     // JavaScript to toggle additional details
@@ -207,6 +226,86 @@ include('../../Control/actions/DeleteJobAction.php');
         });
     });
 </script>
+
+<div id="map"></div>
+
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 33.8869, lng: 9.5375}, // Centered at Tunisia
+            zoom: 6 // Adjust the zoom level as needed
+        });
+
+        // Create the search box and link it to the UI element.
+        var input = document.createElement('input');
+        input.type = "text";
+        input.id = "pac-input";
+        input.placeholder = "Search for a country";
+        input.style.marginTop = "10px";
+        input.style.marginLeft = "10px";
+        input.style.padding = "5px";
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        var searchBox = new google.maps.places.SearchBox(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+            searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+            var places = searchBox.getPlaces();
+
+            if (places.length == 0) {
+                return;
+            }
+
+            // Clear out the old markers.
+            markers.forEach(function(marker) {
+                marker.setMap(null);
+            });
+            markers = [];
+
+            // For each place, get the icon, name and location.
+            var bounds = new google.maps.LatLngBounds();
+            places.forEach(function(place) {
+                if (!place.geometry) {
+                    console.log("Returned place contains no geometry");
+                    return;
+                }
+                var icon = {
+                    url: place.icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(25, 25)
+                };
+
+                // Create a marker for each place.
+                markers.push(new google.maps.Marker({
+                    map: map,
+                    icon: icon,
+                    title: place.name,
+                    position: place.geometry.location
+                }));
+
+                if (place.geometry.viewport) {
+                    // Only geocodes have viewport.
+                    bounds.union(place.geometry.viewport);
+                } else {
+                    bounds.extend(place.geometry.location);
+                }
+            });
+            map.fitBounds(bounds);
+        });
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOVYRIgupAurZup5y1PRh8Ismb1A3lLao&libraries=places&callback=initMap" async defer></script>
+
+
 
 
                             <a class="btn btn-primary py-3 px-5" href="">Browse More researcher</a>

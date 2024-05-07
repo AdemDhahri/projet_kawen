@@ -8,7 +8,7 @@ function updateOffre(string $id, Chercheurs $jobDetails)
     // SQL query to update the job offer in the database
     $sql = "UPDATE chercheurs
             SET nom = :nom, prenom = :prenom, mail = :mail, 
-            tel = :tel, cv = :cv, l_d_v = :l_d_v, message = :message
+            tel = :tel, ville = :ville, cv = :cv, l_d_v = :l_d_v, message = :message
             WHERE id_c = :id";
 
     try {
@@ -21,6 +21,8 @@ function updateOffre(string $id, Chercheurs $jobDetails)
             ':prenom' => $jobDetails->get_Prenom(),
             ':mail' => $jobDetails->get_Mail(),
             ':tel' => $jobDetails->get_Tel(),
+            ':ville' => $jobDetails->get_ville(),
+
             ':cv' => $jobDetails->get_Cv(),
             ':l_d_v' => $jobDetails->get_L_D_V(), // Corrected method name
             ':message' => $jobDetails->get_Message(),
@@ -47,6 +49,8 @@ if (isset($_GET['id'])) {
             $_POST['prenom'],
             $_POST['email'],
             $_POST['telephone'],
+            $_POST['ville'],
+
             $_POST['cv'],
             $_POST['lettre_motivation'],
             $_POST['message']

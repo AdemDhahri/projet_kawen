@@ -97,7 +97,9 @@ include('../../Control/actions/updatejob.php');
                         <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">chercheur</a>
                         <div class="dropdown-menu rounded-0 m-0">
                             <a href="addchercheur.php" class="dropdown-item active">ajouter chercheur</a>
-                            <a href="gererchercheurl.php" class="dropdown-item">les chercheurs</a>
+                            <a href="gererchercheurl.php" class="dropdown-item">mes annonces</a>
+                            <a href="les_chercheurs.php" class="dropdown-item">les chercheurs</a>
+
                         </div>
                     </div>
                     <div class="nav-item dropdown">
@@ -152,6 +154,10 @@ include('../../Control/actions/updatejob.php');
         <div class="mb-3">
             <label for="telephone" class="form-label">Téléphone:</label>
             <input type="tel" class="form-control" id="telephone" name="telephone">
+        </div>
+        <div class="mb-3">
+            <label for="ville" class="form-label">ville:</label>
+            <input type="text" class="form-control" id="ville" name="ville">
         </div>
         <div class="mb-3">
             <label for="cv" class="form-label">CV (PDF):</label>
