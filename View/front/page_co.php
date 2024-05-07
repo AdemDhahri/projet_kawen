@@ -1,6 +1,11 @@
 <?php
 include('../../Model/commentaire.php');
 include('../../Model/chercheur.php');
+<<<<<<< HEAD
+=======
+//include('../../Control/actions/supp_commentaire.php');
+
+>>>>>>> aafae631ea0b323be3f7879d7b0022ba9fa7db77
 include('../../Control/actions/Show_commentaire.php');
 
 

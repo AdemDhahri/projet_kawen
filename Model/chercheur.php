@@ -16,6 +16,7 @@ class chercheurs
 
 
 
+
     // Constructor
     public function __construct($id_c,$nom,$prenom, $mail,$tel,$ville,$cv,$LDM,$message)
     {
@@ -29,8 +30,11 @@ class chercheurs
         $this->l_d_v = $LDM;
         $this->message = $message;
 
+<<<<<<< HEAD
        
 
+=======
+>>>>>>> aafae631ea0b323be3f7879d7b0022ba9fa7db77
 
     }
 
@@ -116,5 +120,10 @@ class chercheurs
     {
         return $this->message;
     }
+<<<<<<< HEAD
 
+=======
+   
+    
+>>>>>>> aafae631ea0b323be3f7879d7b0022ba9fa7db77
 }
