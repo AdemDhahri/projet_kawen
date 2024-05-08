@@ -174,46 +174,14 @@ include('../../Control/actions/paginationAbonnement.php');
                             <?php } ?>
                         </div>
                         <div id="tab-2" class="tab-pane fade show p-0">
+                            
+                        
                             <?php foreach ($allAbonnements as $key => $AbonnementK) { ?>
                                 <!-- Afficher les abonnements -->
                                 <div class="job-item p-4 mb-4">
                                     <div class="row g-4">
                                         <div class="col-sm-12 col-md-8 d-flex align-items-center">
                                             <div class="text-start ps-4">
-                                                <?php
-                            // Inclure le fichier de configuration et le fichier de pagination
-                            require_once('../../config.php');
-                            require_once('../../Control/actions/paginationAbonnement.php');
-
-                            // Nombre d'abonnements par page
-                            $abonnementsParPage = 5;
-
-                            // Récupérer le numéro de page actuelle
-                            $page = isset($_GET['page']) ? $_GET['page'] : 1;
-
-                            // Récupérer les abonnements pour la page actuelle
-                            $abonnements = getAbonnementsPage($page, $abonnementsParPage);
-
-                            // Récupérer le nombre total de pages
-                            $nombreDePages = getNombreDePages($abonnementsParPage);
-
-                            // Afficher les abonnements
-                            foreach ($abonnements as $abonnement) {
-                                // Afficher les détails de l'abonnement
-                                echo "DateFin: " . $abonnement['DateFin'] . "<br>";
-                                // Afficher d'autres détails si nécessaire
-                            }
-
-                            // Afficher les liens de pagination
-                            echo "<div>";
-                            echo "Pages :";
-                            for ($i = 1; $i <= $nombreDePages; $i++) {
-                                echo "<a href='gerercours.php?page=" . $i . "'>" . $i . "</a> ";
-                            }
-                            echo "</div>";
-                            ?>
-
-
                                             <h5 class="mb-3"><?= $AbonnementK['IdAbonnement']?></h5>
                                                 <span class="text-truncate me-0">🗓️ <?= $AbonnementK['DateDeb'] ?></span>
                                                 <span class="text-truncate me-0"> 🗓️<?= $AbonnementK['DateFin'] ?></span>
@@ -234,13 +202,65 @@ include('../../Control/actions/paginationAbonnement.php');
                                     </div>
                                 </div>
                             <?php } ?>
+                            <?php
+                            // Inclure le fichier de configuration et le fichier de pagination
+                            require_once('../../config.php');
+                            require_once('../../Control/actions/paginationAbonnement.php');
+
+                            // Nombre d'abonnements par page
+                            $abonnementsParPage = 5;
+
+                            // Récupérer le numéro de page actuelle
+                            $page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+                            // Récupérer les abonnements pour la page actuelle
+                            $abonnements = getAbonnementsPage($page, $abonnementsParPage);
+
+                            // Récupérer le nombre total de pages
+                            $nombreDePages = getNombreDePages($abonnementsParPage);
+
+                            // Afficher les abonnements
+                            foreach ($abonnements as $abonnement) {
+                                
+                                // Afficher les détails de l'abonnement
+                                echo "IdAbonnement: " . $abonnement['IdAbonnement'] . "<br>";
+                                echo "DateDeb: " . $abonnement['DateDeb'] . "<br>";
+                                echo "DateFin: " . $abonnement['DateFin'] . "<br>";
+                                echo "MethodeDePaiement: " . $abonnement['MethodeDePaiement'] . "<br>";
+                                echo "Prix: " . $abonnement['Prix'] . "<br>";
+                                echo "IdCoursA: " . $abonnement['IdCoursA'] . "<br>";
+
+
+                                // Afficher d'autres détails si nécessaire
+                            }
+
+                            // Afficher les liens de pagination
+                            echo "<div>";
+                            echo "Pages :";
+                            for ($i = 1; $i <= $nombreDePages; $i++) {
+                                echo "<a href='gerercours.php?page=" . $i . "'>" . $i . "</a> ";
+                            }
+                            echo "</div>";
+                            ?>
+                            
                         </div>
                         
-                        
+                       
+
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+    // Récupérer le paramètre GET 'tab'
+    const urlParams = new URLSearchParams(window.location.search);
+    const tab = urlParams.get('tab');
+
+    // Activer l'onglet correspondant
+    if (tab === 'tab-2') {
+        document.getElementById('tab-2').classList.add('active');
+    }
+</script>
 
         <!-- Jobs End -->
 
