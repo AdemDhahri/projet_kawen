@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         isset($_POST['localisation']) && !empty($_POST['localisation']) &&
         isset($_POST['horaire']) && !empty($_POST['horaire']) &&
         isset($_POST['description']) && !empty($_POST['description']) &&
-        isset($_POST['niveau']) && !empty($_POST['niveau'])&&
+        isset($_POST['niveau']) && !empty($_POST['niveau']) &&
         isset($_POST['nbrP']) && !empty($_POST['nbrP'])
     ) {
         // Créer un tableau avec les détails du job
@@ -61,6 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Favicon -->
     <link href="../../assests/front/img/favicon.ico" rel="icon">
 
+
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -82,6 +83,131 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="../../assests/front/css/style.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../assests/front/js/main.js"></script>
+    <script>
+       function validatetitle() {
+                var titre = document.getElementById("titre").value;
+                var titreSpan = document.getElementById("titreSpan");
+                if (titre.length > 0) {
+                titreSpan.innerText = "Le titre est valide.";
+                titreSpan.style.color = "green";
+                } else {
+                titreSpan.innerText = "Le titre doit avoir moins de 20 caractères.";
+                titreSpan.style.color = "red";
+                }
+                return false; r
+            }
+
+        function validmail() {
+    var email = document.getElementById("email_r").value;
+    var emailSpan = document.getElementById("email_r_span");
+    // Vérification de la validité de l'email avec une expression régulière
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (email.length === 0) {
+        emailSpan.innerText = "Veuillez saisir une adresse e-mail.";
+        emailSpan.style.color = "red";
+    } else if (!emailPattern.test(email)) {
+        emailSpan.innerText = "Veuillez saisir une adresse e-mail valide.";
+        emailSpan.style.color = "red";
+    } else {
+        emailSpan.innerText = "L'email est valide.";
+        emailSpan.style.color = "green";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+function valids() {
+    var salaire = document.getElementById("salaire").value;
+    var salaireSpan = document.getElementById("salaireSpan");
+    
+    if (salaire.length === 0) {
+        salaireSpan.innerText = "Veuillez saisir le salaire.";
+        salaireSpan.style.color = "red";
+    } else if (isNaN(salaire) || parseFloat(salaire) <= 0 || parseFloat(salaire) < 300) {
+        salaireSpan.innerText = "Le salaire doit être un nombre valide supérieur à 300.";
+        salaireSpan.style.color = "red";
+    } else {
+        salaireSpan.innerText = "Le salaire est valide.";
+        salaireSpan.style.color = "green";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+function validLoc() {
+    var localisation = document.getElementById("localisation").value;
+    var localisationSpan = document.getElementById("Lspan");
+    
+    if (localisation.length === 0) {
+        localisationSpan.innerText = "Veuillez saisir la localisation.";
+        localisationSpan.style.color = "red";
+    } else {
+        localisationSpan.innerText = "La localisation est valide.";
+        localisationSpan.style.color = "green";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+function validNiveau() {
+    var niveau = document.getElementById("niveau").value;
+    var niveauSpan = document.getElementById("Nspan");
+    
+    // Tableau des niveaux valides
+    var niveauxValides = ["niveau secondaire", "bac", "bac+1", "bac+2", "bac+3", "bac+4", "bac+5", "bac+6", "bac+7", "bac+8", "bac+9", "bac+10"];
+    
+    // Vérifie si le niveau saisi est dans le tableau des niveaux valides
+    if (niveauxValides.includes(niveau.toLowerCase())) {
+        niveauSpan.innerText = "Le niveau d'expérience est valide.";
+        niveauSpan.style.color = "green";
+    } else {
+        niveauSpan.innerText = "Veuillez saisir un niveau d'expérience valide (niveau secondaire, bac, bac+1, ...).";
+        niveauSpan.style.color = "red";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+
+function validPost() {
+    var nbrPostes = document.getElementById("nbrP").value;
+    var postesSpan = document.getElementById("Pspan");
+    
+    // Vérifie si le nombre de postes est vide ou n'est pas un nombre positif
+    if (nbrPostes === "" || isNaN(nbrPostes) || parseInt(nbrPostes) <= 0) {
+        postesSpan.innerText = "Veuillez saisir un nombre valide de postes disponibles.";
+        postesSpan.style.color = "red";
+    } else {
+        postesSpan.innerText = "Le nombre de postes est valide.";
+        postesSpan.style.color = "green";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+
+function validDescription() {
+    var description = document.getElementById("description").value;
+    var descriptionSpan = document.getElementById("Dspan");
+    
+    // Vérifie si la description est vide
+    if (description.trim() === "") {
+        descriptionSpan.innerText = "Veuillez saisir une description.";
+        descriptionSpan.style.color = "red";
+    } else {
+        descriptionSpan.innerText = "La description est valide.";
+        descriptionSpan.style.color = "green";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+
+
+
+
+
+
+
+
+
+    </script>
 </head>
 
 <body>
@@ -154,26 +280,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>'
                         ?>
 
-                    <form id="form" name="form" action="#" method="post">
+                    <form id="form" name="form" action="#" method="post" onsubmit="return validateForm()">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="titre" name="titre" placeholder="Title"
+
+                                    <input type="text" class="form-control" id="titre" name="titre" placeholder="Title" onblur="validatetitle()"
                                         required>
                                     <label for="titre">Titre de l'offre</label>
+                                    <span id="titreSpan"></span>
+                                    <div id="titre-error" class="text-danger"></div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input type="email" class="form-control" id="email_r" name="email_r"
-                                        placeholder="Your Email" required>
+                                        placeholder="Your Email" required  onblur="validmail()">
+                                        <span id="email_r_span"></span>
                                     <label for="email_r">Email du recruteur</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input pattern="[0-9]*" min="0"  type="number" class="form-control" id="salaire" name="salaire" placeholder="Salary"
-                                        required>
+                                    <input pattern="[0-9]*" min="0" type="number" class="form-control" id="salaire"
+                                        name="salaire" placeholder="Salary" required  onblur="valids()">
+                                        <span id="salaireSpan"></span>
                                     <label for="salaire">Salaire</label>
                                 </div>
                             </div>
@@ -192,46 +323,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="localisation" name="localisation"
-                                        placeholder="Location" required>
+                                        placeholder="Location" required  onblur="validLoc()">
+                                        <span id="Lspan"></span>
                                     <label for="localisation">Localisation</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="niveau" name="niveau"
-                                        placeholder="Experience" required>
+                                        placeholder="Experience" required onblur ="validNiveau()">
+                                        <span id="Nspan"></span>
                                     <label for="niveau">Niveau d'expérience requis</label>
                                 </div>
                             </div>
-                             <div class="col-md-6">
+                            <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input pattern="[0-100]*" min="1"  type="number" class="form-control" id="nbrP" name="nbrP" placeholder="Postes dispo"
-                                        required>
+                                    <input pattern="[0-100]*" min="1" type="number" class="form-control" id="nbrP"
+                                        name="nbrP" placeholder="Postes dispo" required onblur ="validPost()">
+                                         <span id="Pspan"></span>
                                     <label for="nbrP">Postes</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
                                     <textarea class="form-control" placeholder="Leave a message here" id="description"
-                                        name="description" style="height: 150px" required></textarea>
+                                        name="description" style="height: 150px" required onblur="validDescription()"></textarea>
+                                        <span id="Dspan"></span>
                                     <label for="description">Description</label>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <!-- <button class="btn btn-primary w-100 py-3" type="submit">Post job</button> -->
                                 <input type="submit" class="btn btn-primary w-100 py-3" value="Post job">
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
             <!-- Jobs End -->
-
-
-
-
-
             <!-- Footer Start -->
             <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
                 <div class="container py-5">
@@ -314,8 +442,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <!-- Template Javascript -->
         <script src="../../assests/front/js/main.js"></script>
+    </body>
 
-      
-</body>
-
-</html>
+    </html>

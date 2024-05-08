@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         isset($_POST['localisation']) && !empty($_POST['localisation']) &&
         isset($_POST['horaire']) && !empty($_POST['horaire']) &&
         isset($_POST['description']) && !empty($_POST['description']) &&
-        isset($_POST['niveau']) && !empty($_POST['niveau'])&&
+        isset($_POST['niveau']) && !empty($_POST['niveau']) &&
         isset($_POST['nbrP']) && !empty($_POST['nbrP'])
     ) {
         // Créer un tableau avec les détails du job
@@ -91,6 +91,130 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="../../assests/front/css/style.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+     <script>
+       function validatetitle() {
+                var titre = document.getElementById("titre").value;
+                var titreSpan = document.getElementById("titreSpan");
+                if (titre.length > 0) {
+                titreSpan.innerText = "Le titre est valide.";
+                titreSpan.style.color = "green";
+                } else {
+                titreSpan.innerText = "Le titre doit avoir moins de 20 caractères.";
+                titreSpan.style.color = "red";
+                }
+                return false; r
+            }
+
+        function validmail() {
+    var email = document.getElementById("email_r").value;
+    var emailSpan = document.getElementById("email_r_span");
+    // Vérification de la validité de l'email avec une expression régulière
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (email.length === 0) {
+        emailSpan.innerText = "Veuillez saisir une adresse e-mail.";
+        emailSpan.style.color = "red";
+    } else if (!emailPattern.test(email)) {
+        emailSpan.innerText = "Veuillez saisir une adresse e-mail valide.";
+        emailSpan.style.color = "red";
+    } else {
+        emailSpan.innerText = "L'email est valide.";
+        emailSpan.style.color = "green";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+function valids() {
+    var salaire = document.getElementById("salaire").value;
+    var salaireSpan = document.getElementById("salaireSpan");
+    
+    if (salaire.length === 0) {
+        salaireSpan.innerText = "Veuillez saisir le salaire.";
+        salaireSpan.style.color = "red";
+    } else if (isNaN(salaire) || parseFloat(salaire) <= 0 || parseFloat(salaire) < 300) {
+        salaireSpan.innerText = "Le salaire doit être un nombre valide supérieur à 300.";
+        salaireSpan.style.color = "red";
+    } else {
+        salaireSpan.innerText = "Le salaire est valide.";
+        salaireSpan.style.color = "green";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+function validLoc() {
+    var localisation = document.getElementById("localisation").value;
+    var localisationSpan = document.getElementById("Lspan");
+    
+    if (localisation.length === 0) {
+        localisationSpan.innerText = "Veuillez saisir la localisation.";
+        localisationSpan.style.color = "red";
+    } else {
+        localisationSpan.innerText = "La localisation est valide.";
+        localisationSpan.style.color = "green";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+function validNiveau() {
+    var niveau = document.getElementById("niveau").value;
+    var niveauSpan = document.getElementById("Nspan");
+    
+    // Tableau des niveaux valides
+    var niveauxValides = ["niveau secondaire", "bac", "bac+1", "bac+2", "bac+3", "bac+4", "bac+5", "bac+6", "bac+7", "bac+8", "bac+9", "bac+10"];
+    
+    // Vérifie si le niveau saisi est dans le tableau des niveaux valides
+    if (niveauxValides.includes(niveau.toLowerCase())) {
+        niveauSpan.innerText = "Le niveau d'expérience est valide.";
+        niveauSpan.style.color = "green";
+    } else {
+        niveauSpan.innerText = "Veuillez saisir un niveau d'expérience valide (niveau secondaire, bac, bac+1, ...).";
+        niveauSpan.style.color = "red";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+
+function validPost() {
+    var nbrPostes = document.getElementById("nbrP").value;
+    var postesSpan = document.getElementById("Pspan");
+    
+    // Vérifie si le nombre de postes est vide ou n'est pas un nombre positif
+    if (nbrPostes === "" || isNaN(nbrPostes) || parseInt(nbrPostes) <= 0) {
+        postesSpan.innerText = "Veuillez saisir un nombre valide de postes disponibles.";
+        postesSpan.style.color = "red";
+    } else {
+        postesSpan.innerText = "Le nombre de postes est valide.";
+        postesSpan.style.color = "green";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+
+function validDescription() {
+    var description = document.getElementById("description").value;
+    var descriptionSpan = document.getElementById("Dspan");
+    
+    // Vérifie si la description est vide
+    if (description.trim() === "") {
+        descriptionSpan.innerText = "Veuillez saisir une description.";
+        descriptionSpan.style.color = "red";
+    } else {
+        descriptionSpan.innerText = "La description est valide.";
+        descriptionSpan.style.color = "green";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+
+
+
+
+
+
+
+
+
+    </script>
 </head>
 
 <body>
@@ -151,39 +275,100 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         <!-- Jobs Start -->
-        <div class="">
-                            <h4 class="mb-4">Apply For The Job</h4>
-                            <form id="form" name="form" action="" method="post" enctype="multipart/form-data">
-                                <div class="row g-3">
-                                    <div class="col-12 col-sm-6">
-                                        <input name="nom" class="form-control" placeholder="Nom">
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <input name="prenom" class="form-control" placeholder="Prenom">
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <input type="number" name="CIN" pattern="[0-9]{8}" class="form-control"
-                                            placeholder="CIN">
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <input type="file" name="cv" class="form-control bg-white">
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <input name="phone" type="tel" class="form-control" placeholder="Telephone">
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <input type="email" name="email" class="form-control" placeholder="Email">
-                                    </div>
-                                    <div class="col-12">
-                                        <textarea name="competence" class="form-control" rows="5"
-                                            placeholder="Compétences"></textarea>
-                                    </div>
-                                    <div class="col-12">
-                                        <button class="btn btn-primary w-100" type="submit">Apply Now</button>
-                                    </div>
-                                </div>
-                            </form>
+        <div class="container-xxl py-5">
+            <div class="container">
+                <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Edit job</h1>
+                <?php
+                if (!empty($error))
+                    echo '<div class="alert alert-danger" role="alert">
+                    ' . $error . '
+                </div>'
+                        ?>
+
+                    <form id="form" name="form" action="#" method="post" onsubmit="return validateForm()">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" value="<?php echo $offer['titre'] ?>" class="form-control" id="titre" onblur="validatetitle()"
+                                    name="titre" placeholder="Title" required>
+                                    <span id="titreSpan"></span>
+                                <label for="titre">Titre de l'offre</label>
+                            </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="email" value="<?php echo $offer['email_r'] ?>" class="form-control" onblur="validmail()"
+                                    id="email_r" name="email_r" placeholder="Your Email" required>
+                                    <span id="email_r_span"></span>
+                                <label for="email_r">Email du recruteur</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input pattern="[0-9]*" type="number" min="0" value="<?php echo $offer['salaire'] ?>" onblur="valids()"
+                                    class="form-control" id="salaire" name="salaire" placeholder="Salary" required>
+                                    <span id="salaireSpan"></span>
+                                <label for="salaire">Salaire</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select class="form-select" id="horaire" name="horaire" aria-label="Select Schedule"
+                                    required>
+                                    <option value="part-time" <?= $offer["horaire"] == 'part-time' ? ' selected="selected"' : ''; ?>>Part-time</option>
+                                    <option value="full-time" <?= $offer["horaire"] == 'full-time' ? ' selected="selected"' : ''; ?>>Full-time</option>
+                                    <!-- <option selected disabled>Select Schedule</option>
+                                    <option value="part-time">Part-time</option>
+                                    <option value="full-time">Full-time</option> -->
+                                </select>
+                                <label for="horaire">Horaire</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" value="<?php echo $offer['localisation'] ?>" class="form-control" onblur="validLoc()"
+                                    id="localisation" name="localisation" placeholder="Location" required>
+                                    <span id="Lspan"></span>
+                                <label for="localisation">Localisation</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" value="<?php echo $offer['niveau'] ?>" class="form-control" onblur ="validNiveau()"
+                                    id="niveau" name="niveau" placeholder="Experience" required>
+                                    <span id="Nspan"></span>
+                                <label for="niveau">Niveau d'expérience requis</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input pattern="[0-100]*" min="1" value="<?php echo $offer['nbrP'] ?>" type="number" class="form-control" id="nbrP" name="nbrP" placeholder="Postes dispo"
+                                        required  onblur ="validPost()">
+                                       <span id="Pspan"></span>
+                                    <label for="nbrP">Postes</label>
+                                </div>
+                            </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a message here" id="description"  onblur="validDescription()"
+                                    name="description" style="height: 150px" required>
+                                        <?php echo htmlspecialchars($offer['description']) ?>
+                                    </textarea>
+                                     <span id="Dspan"></span>
+                                <label for="description">Description</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <!-- <button class="btn btn-primary w-100 py-3" type="submit">Post job</button> -->
+
+                            <input type="submit" class="btn btn-primary w-100 py-3" value="Edit job">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
         <!-- Jobs End -->
 
 

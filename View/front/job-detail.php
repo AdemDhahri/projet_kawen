@@ -10,12 +10,12 @@ include '../../Control/condidaControl.php';
 // Check if the ID parameter is set in the URL
 if (isset($_GET['id'])) {
     // Retrieve the ID from the URL
-    $offer_id = $_GET['id'];
+    $cin = $_GET['id'];
 
     // Créer une instance de la classe JobControl
     $jobController = new JobControl();
 
-    $offer = $jobController->getOffreById($offer_id);
+    $offer = $jobController->getOffreById($cin);
 }
 
 $error = '';
@@ -57,11 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             );
 
             // Ajouter le job à la base de données
-            if ($condiaControl->createC($condidature, $offer_id)) {
+            if ($condiaControl->createC($condidature, $cin)) {
                 $success = true;
                 unset($_POST);
                 unset($_FILES);
-                header("Location:lista.php?id_o=$offer_id");
+                header("Location:lista.php?id_o=$cin");
                 $success = false;
             } else {
                 $error = "Une erreur s'est produite lors de l'ajout de l'offre d'emploi.";
@@ -110,6 +110,122 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Template Stylesheet -->
     <link href="../../assests/front/css/style.css" rel="stylesheet">
+    <script src="../../assests/front/js/main.js"></script>
+     <script>
+       function validNom() {
+    var nom = document.getElementById("nom").value;
+    var nomSpan = document.getElementById("nomSpan");
+    
+    // Vérifie si la longueur du nom est entre 5 et 20 caractères inclusivement
+    if (nom.length >= 5 && nom.length <= 20) {
+        nomSpan.innerText = "Le nom est valide.";
+        nomSpan.style.color = "green";
+    } else {
+        nomSpan.innerText = "Le nom doit avoir entre 5 et 20 caractères.";
+        nomSpan.style.color = "red";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}   
+
+
+        function validmail() {
+    var email = document.getElementById("email").value;
+    var emailSpan = document.getElementById("emailSpan");
+    // Vérification de la validité de l'email avec une expression régulière
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (email.length === 0) {
+        emailSpan.innerText = "Veuillez saisir une adresse e-mail.";
+        emailSpan.style.color = "red";
+    } else if (!emailPattern.test(email)) {
+        emailSpan.innerText = "Veuillez saisir une adresse e-mail valide.";
+        emailSpan.style.color = "red";
+    } else {
+        emailSpan.innerText = "L'email est valide.";
+        emailSpan.style.color = "green";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+function validPrenom() {
+    var prenom = document.getElementById("prenom").value;
+    var prenomSpan = document.getElementById("PrenomSpan");
+    
+    // Vérifie si la longueur du prénom est entre 5 et 20 caractères inclusivement
+    if (prenom.length >= 5 && prenom.length <= 20) {
+        prenomSpan.innerText = "Le prénom est valide.";
+        prenomSpan.style.color = "green";
+    } else {
+        prenomSpan.innerText = "Le prénom doit avoir entre 5 et 20 caractères.";
+        prenomSpan.style.color = "red";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+
+
+function validCin() {
+    var cin = document.getElementById("CIN").value;
+    var cinSpan = document.getElementById("cinSpan");
+    
+    // Vérifie si le CIN est vide ou n'est pas composé de 8 chiffres
+    if (cin.length === 0) {
+        cinSpan.innerText = "Veuillez saisir le CIN.";
+        cinSpan.style.color = "red";
+    } else if (cin.length !== 8 || isNaN(cin)) {
+        cinSpan.innerText = "Le CIN doit être composé de 8 chiffres.";
+        cinSpan.style.color = "red";
+    } else {
+        cinSpan.innerText = "Le CIN est valide.";
+        cinSpan.style.color = "green";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+
+function validtel() {
+    var tel = document.getElementById("phone").value;
+    var telSpan = document.getElementById("telSpan");
+    
+    // Vérifie si le numéro de téléphone contient exactement 8 chiffres
+    if (/^\d{8}$/.test(tel)) {
+        telSpan.innerText = "Le numéro de téléphone est valide.";
+        telSpan.style.color = "green";
+    } else {
+        telSpan.innerText = "Veuillez saisir un numéro de téléphone valide (8 chiffres).";
+        telSpan.style.color = "red";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+
+
+function validcompetence() {
+    var description = document.getElementById("competence").value;
+    var descriptionSpan = document.getElementById("Dspan");
+    
+    // Vérifie si la description est vide
+    if (description.trim() === "") {
+        descriptionSpan.innerText = "Veuillez saisir une competence.";
+        descriptionSpan.style.color = "red";
+    } else {
+        descriptionSpan.innerText = "La competence est valide.";
+        descriptionSpan.style.color = "green";
+    }
+    
+    return false; // Retourne false pour empêcher le formulaire de se soumettre
+}
+
+
+
+
+
+
+
+
+
+    </script>
 </head>
 
 <body>
@@ -203,8 +319,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <p><?php echo $offer['description']; ?></p>
                             <h4 class="mb-3">niveau demandé</h4>
                             <p><?php echo $offer['niveau']; ?></p>
-                             <form action="export.php" method="post">
-        <input type="hidden" name="offer_id" value="<?php echo $offer_id; ?>">
+                            <form action="export.php" method="post">
+                                <input type="hidden" name="offer_id" value="<?php echo $cin; ?>">
                                 <button type="submit" class="btn btn-primary">Exporter les données de l'offre</button>
                             </form>
 
@@ -212,36 +328,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         <div class="">
                             <h4 class="mb-4">Apply For The Job</h4>
-                            <form id="form" name="form" action="" method="post" enctype="multipart/form-data">
-                                <div class="row g-3">
-                                    <div class="col-12 col-sm-6">
-                                        <input name="nom" class="form-control" placeholder="Nom">
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <input name="prenom" class="form-control" placeholder="Prenom">
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <input type="number" name="CIN" pattern="[0-9]{8}" class="form-control"
-                                            placeholder="CIN">
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <input type="file" name="cv" class="form-control bg-white">
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <input name="phone" type="tel" class="form-control" placeholder="Telephone">
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <input type="email" name="email" class="form-control" placeholder="Email">
-                                    </div>
-                                    <div class="col-12">
-                                        <textarea name="competence" class="form-control" rows="5"
-                                            placeholder="Compétences"></textarea>
-                                    </div>
-                                    <div class="col-12">
-                                        <button class="btn btn-primary w-100" type="submit">Apply Now</button>
-                                    </div>
-                                </div>
-                            </form>
+                          <form id="form" name="form" action="" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <div class="row g-3">
+            <div class="col-12 col-sm-6">
+                <input name="nom" class="form-control" id="nom" placeholder="Nom" onblur="validNom()">
+                <span id="nomSpan"></span>
+            </div>
+            <div class="col-12 col-sm-6">
+                <input name="prenom" class="form-control" id="prenom" placeholder="Prenom" onblur="validPrenom()">
+                <span id="PrenomSpan"></span>
+            </div>
+            <div class="col-12 col-sm-6">
+                <input type="number" name="CIN" id="CIN" class="form-control" placeholder="CIN" onblur="validCin()">
+                <span id="cinSpan"></span>
+            </div>
+            <div class="col-12 col-sm-6">
+                <input type="file" name="cv" class="form-control bg-white">
+            </div>
+            <div class="col-12 col-sm-6">
+                <input name="phone" type="tel" id="phone" class="form-control" placeholder="Telephone" onblur="validtel()">
+                <span id="telSpan"></span>
+            </div>
+            <div class="col-12 col-sm-6">
+                <input type="email" name="email" id="email" class="form-control" placeholder="Email" onblur="validmail()">
+                <span id="emailSpan"></span>
+            </div>
+            <div class="col-12">
+                <textarea name="competence" id="competence" class="form-control" rows="5" onblur="validcompetence()" placeholder="Compétences"></textarea>
+                <span id="Dspan"></span>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary w-100" type="submit">Apply Now</button>
+            </div>
+        </div>
+    </form>
+
                         </div>
                     </div>
 

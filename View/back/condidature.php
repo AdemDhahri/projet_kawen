@@ -8,12 +8,12 @@ include '../../Control/jobControl.php';
 // Check if the ID parameter is set in the URL
 if (isset($_GET['id_o'])) {
     // Retrieve the ID from the URL
-    $offer_id = $_GET['id_o'];
+    $cin = $_GET['id_o'];
 
     // Créer une instance de la classe JobControl
     $jobController = new JobControl();
 
-    $offer = $jobController->getOffreById($offer_id);
+    $offer = $jobController->getOffreById($cin);
 }
 
 // Créer une instance de la classe JobControl
@@ -435,6 +435,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <th scope="col">phone</th>
                                             <th scope="col">cv</th>
                                             <th scope="col">competence</th>
+                                            <th scope="col">Etat_Condidature</th>
                                             <th scope="col">Actions</th>
                                         </tr>
                                         <?php
@@ -450,6 +451,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                 <td><?php echo $condidat['phone']; ?></td>
                                                 <td><?php echo $condidat['cv']; ?></td>
                                                 <td><?php echo $condidat['competence']; ?></td>
+                                                <td><?php echo $condidat['etat_C']; ?></td>
 
                                                 <td>
                                                     <div class="btn-row">

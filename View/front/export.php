@@ -9,13 +9,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Vérifier si l'ID de l'offre est présent dans les données postées
     if (isset($_POST['offer_id'])) {
         // Récupérer l'ID de l'offre à partir des données postées
-        $offer_id = $_POST['offer_id'];
+        $cin = $_POST['offer_id'];
 
         // Créer une instance de la classe JobControl
         $jobController = new JobControl();
 
         // Récupérer les détails de l'offre en utilisant son ID
-        $offer = $jobController->getOffreById($offer_id);
+        $offer = $jobController->getOffreById($cin);
 
         // Vérifier si l'offre existe
         if ($offer) {

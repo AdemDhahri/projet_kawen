@@ -70,18 +70,29 @@ class CondidaControl
         $query->execute([":CIN" => $id]);
         return $query->fetch(PDO::FETCH_ASSOC);
     }
-    public function updateC(string $id, Condidature $jobDetails)
+    public function updateC(Condidature $jobDetails)
     {
         // Requête SQL pour mettre à jour l'offre dans la base de données
         $sql = "UPDATE condidatures
                 SET CIN = :CIN, nom = :nom, prenom = :prenom,
                     email = :email, phone = :phone,
-                    cv = :cv
-                WHERE CIN = :id";
-
+                    competence = :competence
+                WHERE CIN = :CIN";
         try {
             // Préparation de la requête
             $stmt = config::getConnexion()->prepare($sql);
+
+            $arr = [
+                ':CIN' => $jobDetails->get_CIN(),
+                ':nom' => $jobDetails->get_nom(),
+                ':prenom' => $jobDetails->get_prenom(),
+                ':email' => $jobDetails->get_email(),
+                ':phone' => $jobDetails->get_phone(),
+               // ':cv' => $jobDetails->get_cv(),
+                ':competence' => $jobDetails->get_competence(),
+            ];
+
+            var_dump($arr);
 
             // Exécution de la requête avec les valeurs des paramètres
             return $stmt->execute([

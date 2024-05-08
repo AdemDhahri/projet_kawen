@@ -184,76 +184,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         <!-- Jobs Start -->
+<div class="row">
+    <div id="tab-1">
+        <?php foreach ($condidats as $condidat) { ?>
+            <!-- Affichage des détails de l'offre -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><?php echo $condidat['titre']; ?></h5>
+                    <p class="card-text">Nom: <?php echo $condidat['nom']; ?></p>
+                    <p class="card-text">Prénom: <?php echo $condidat['prenom']; ?></p>
+                    <p class="card-text">Email: <?php echo $condidat['email']; ?></p>
+                    <p class="card-text">Téléphone: <?php echo $condidat['phone']; ?></p>
+                    <p class="card-text">CV: <?php echo $condidat['cv']; ?></p>
+                    <p class="card-text">Compétence: <?php echo $condidat['competence']; ?></p>
 
-        <div class="row">
-            <div id="tab-1">
-                <!-- Tableau HTML pour afficher les offres -->
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">titre d'offre</th>
-                            <th scope="col">nom</th>
-                            <th scope="col">prenom</th>
-                            <th scope="col">mail</th>
-                            <th scope="col">phone</th>
-                            <th scope="col">cv</th>
-                            <th scope="col">competence</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
+                    <!-- Actions pour chaque candidature -->
+                    <div class="btn-group">
+                        <?php if ($condidat['etat_C'] != 'A') { ?>
+                            <!-- Bouton pour accepter la candidature -->
+                            <button type="button" class="btn btn-primary decrease-posts"
+                                data-offer-id="<?php echo $condidat['id_o']; ?>"
+                                data-cond-id="<?php echo $condidat["cin"]; ?>">
+                                <i class="far fa-check-circle"></i> Accepter
+                            </button>
+                        <?php } ?>
 
-                        // Afficher chaque offre dans une ligne du tableau
-                        foreach ($condidats as $index => $condidat) {
-                            ?>
-                            <tr>
-                                <td><?php echo $condidat['titre']; ?></td>
-                                <td><?php echo $condidat['nom']; ?></td>
-                                <td><?php echo $condidat['prenom']; ?></td>
-                                <td><?php echo $condidat['email']; ?></td>
-                                <td><?php echo $condidat['phone']; ?></td>
-                                <td><?php echo $condidat['cv']; ?></td>
-                                <td><?php echo $condidat['competence']; ?></td>
+                        <!-- Bouton pour modifier la candidature -->
+                        <button type="button" class="btn btn-primary">
+                            <a href="modifierCondida.php?cin=<?php echo $condidat['cin']; ?>">
+                                <i class="far fa-edit"></i> Modifier
+                            </a>
+                        </button>
 
-                                <td>
-                                    <div class="btn-row">
-                                        <?php
-                                        if ($condidat['etat_C'] != 'A') { ?>
-                                            <!-- Ajouter ici les boutons pour les actions -->
-                                            <button type="button" class="btn btn-primary decrease-posts"
-                                                data-offer-id="<?php echo $condidat['id_o']; ?>"
-                                                data-cond-id="<?php echo $condidat["cin"]; ?>">
-                                                <i class="far fa-check-circle"></i>
-                                            </button>
-                                        <?php } ?>
-
-                                        <button type="button" class="btn btn-primary">
-                                            <a href="modifierCondida.php?cin=<?php echo $condidat['cin']; ?>">
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                            </a>
-                                        </button>
-
-                                        <form action="" id="deleteForm" name="deleteForm" method="post">
-                                            <input type="hidden" name="CIN" value="<?php echo $condidat['cin']; ?>">
-                                            <button class="btn btn-danger">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php
-                        }
-                        ?>
-                    </tbody>
-                </table>
-
+                        <!-- Formulaire pour supprimer la candidature -->
+                        <form action="" id="deleteForm" name="deleteForm" method="post">
+                            <input type="hidden" name="CIN" value="<?php echo $condidat['cin']; ?>">
+                            <button class="btn btn-danger">
+                                <i class="far fa-trash-alt"></i> Supprimer
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
+        <?php } ?>
     </div>
-    </div>
-    <!-- Jobs End -->
+</div>
+<!-- Jobs End -->
+
 
 
     <!-- Footer Start -->
