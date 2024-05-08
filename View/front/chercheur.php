@@ -1,8 +1,9 @@
 <?php 
-session_start();
+/*session_start();
+
 
 if (isset($_POST['id_user']) && isset($_POST['mdp'])) 
-{
+{*/
 ?>
 
 
@@ -92,7 +93,7 @@ if (isset($_POST['id_user']) && isset($_POST['mdp']))
 
                     <a href="contact.html" class="nav-item nav-link">Contactez-nous</a>
                 </div>
-                <a href="compteedd.html" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">mon compte<i
+                <a href="compte_chercheur.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">mon compte<i
                         class="fa fa-arrow-right ms-3"></i></a>
             </div>
         </nav>
@@ -212,12 +213,51 @@ if (isset($_POST['id_user']) && isset($_POST['mdp']))
             <div class="container">
                 <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Explorez nos différents services</h1>
                 <div class="row g-4">
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <a class="cat-item rounded p-4" href="">
-                            <i class="fa fa-3x fa-mail-bulk text-primary mb-4"></i>
-                            <h6 class="mb-3">Déménagement et transport</h6>
-                            <p class="mb-0">123 Vacants</p>
-                        </a>
+
+    <style>
+        .weather-info {
+            width: 300px;
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .weather-info h1 {
+            margin-top: 0;
+        }
+
+        .weather-info p {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="weather-info">
+        <h1>Current Weather</h1>
+        <?php
+        // Replace 'YOUR_API_KEY' with your actual API key
+        $apiKey = '402cc9695f30e4e1c53af396f42c2518';
+        $cityName = 'TUNIS';
+
+        // Fetch the current weather data
+        $weatherData = file_get_contents("https://api.openweathermap.org/data/2.5/weather?q={$cityName}&units=metric&appid={$apiKey}");
+        $data = json_decode($weatherData);
+
+        // Display the weather information
+        if (isset($data->name)) {
+        ?>
+            <p>City: <?php echo $data->name; ?></p>
+            <p>Temperature: <?php echo $data->main->temp; ?>°C</p>
+            <p>Feels Like: <?php echo $data->main->feels_like; ?>°C</p>
+            <p>Humidity: <?php echo $data->main->humidity; ?>%</p>
+            <p>Weather: <?php echo $data->weather[0]->description; ?></p>
+        <?php
+        }
+        ?>
+    </div>
+</body>
+</html>
                     </div>
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
                         <a class="cat-item rounded p-4" href="">
@@ -387,8 +427,8 @@ if (isset($_POST['id_user']) && isset($_POST['mdp']))
 
 </html>
 <?php 
-}else{
-     header("Location: login.php");
+/*}else{
+    // header("Location: login.php");
      exit();
-}
+}*/
  ?>

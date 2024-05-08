@@ -407,9 +407,7 @@ if(isset($_POST['search'])) {
                                <th>Nom complet</th>
                                <th>Adresse email</th>
                                <th>Mot de passe</th>
-                               <th>Réponse 1</th>
-                               <th>Réponse 2</th>
-                               <th>Réponse 3</th>
+                             
                                <th>Role </th>
                            </tr>
                        </thead>
@@ -427,9 +425,7 @@ if(isset($_POST['search'])) {
                 <td><?php echo $user['nom_comp']; ?></td>
                 <td><?php echo $user['adresse_mail']; ?></td>
                 <td><?php echo $user['mdp']; ?></td>
-                <td><?php echo $user['rep1']; ?></td>
-                <td><?php echo $user['rep2']; ?></td>
-                <td><?php echo $user['rep3']; ?></td>
+               
                 <td><?php echo $user['roles']; ?></td>
             </tr>
             <?php

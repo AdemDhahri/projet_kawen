@@ -7,7 +7,7 @@ if (isset($_SESSION['id_user']) && isset($_SESSION['mdp'])) {
     $mdp = $_SESSION['mdp'];
 
     try {
-        $pdo = new PDO("mysql:host=localhost;dbname=votre_base_de_donnees", "votre_nom_utilisateur", "votre_mot_de_passe");
+        $pdo = new PDO("mysql:host=localhost;dbname=projet", "votre_nom_utilisateur", "votre_mot_de_passe");
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         die("Erreur de connexion à la base de données: " . $e->getMessage());
@@ -23,9 +23,7 @@ if (isset($_SESSION['id_user']) && isset($_SESSION['mdp'])) {
     if ($user) {
         $_SESSION['nom_comp'] = $user['nom_comp'];
         $_SESSION['adresse_mail'] = $user['adresse_mail'];
-        $_SESSION['rep1'] = $user['rep1'];
-        $_SESSION['rep2'] = $user['rep2'];
-        $_SESSION['rep3'] = $user['rep3'];
+      
         $_SESSION['roles'] = $user['roles'];
         header("Location: chercheur.php");
         exit();

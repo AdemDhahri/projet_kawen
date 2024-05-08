@@ -6,8 +6,32 @@ include('../../Model/user.php');
 // Créer une instance de la classe utilisateur
 $CUser = new CUser();
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['supprimer'])) {
+    // Vérifier si l'identifiant de l'utilisateur est présent dans le formulaire
+    if (isset($_POST["id_user"])) {
+        // Appeler la fonction supprimerClient avec l'identifiant de l'utilisateur
+        $CUser->supprimerClient($_POST["id_user"]);
+        // Rediriger vers la page d'affichage après la suppression
+        header('Location: afficheru.php');
+        exit();
+    }
+}
+
+
 // Récupérer la liste des utilisateurs depuis la base de données
 $liste = $CUser->afficherClients();
+$conn=config::getConnexion();
+$sql = "SELECT COUNT(*) AS total FROM user";
+$stmtTotalUsers = $conn->prepare($sql);
+$stmtTotalUsers->execute();
+$totalUsers = $stmtTotalUsers->fetch(PDO::FETCH_ASSOC)['total'];
+
+// Requête pour compter le nombre d'utilisateurs pour chaque rôle
+$sqlRoleCounts = "SELECT roles, COUNT(*) AS count FROM user GROUP BY roles";
+$stmtRoleCounts = $conn->prepare($sqlRoleCounts);
+$stmtRoleCounts->execute();
+$roleCounts = $stmtRoleCounts->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -338,36 +362,131 @@ $liste = $CUser->afficherClients();
                     <h1 class="h3 mb-4 text-gray-800">Liste des Utilisateurs</h1>
                    
 
-                <table border="1">
-                     <thead>
-                        <tr>
-                            <th>id_user</th>
-                            <th>Nom complet</th>
-                            <th>Adresse email</th>
-                            <th>Mot de passe</th>
-                            <th>Réponse 1</th>
-                            <th>Réponse 2</th>
-                            <th>Réponse 3</th>
-                            <th>Role </th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($liste as $user): ?>
-                            <tr> 
-                                <td><?php echo $user['id_user']; ?></td>
-                                <td><?php echo $user['nom_comp']; ?></td>
-                                <td><?php echo $user['adresse_mail']; ?></td>
-                                <td><?php echo $user['mdp']; ?></td>
-                                <td><?php echo $user['rep1']; ?></td>
-                                <td><?php echo $user['rep2']; ?></td>
-                                <td><?php echo $user['rep3']; ?></td>
-                                <td><?php echo $user['roles']; ?></td>
-                                <td><a href=" modify.php ?id=<?php echo $user['id_user']; ?>">Update</a></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                    
+// Inclure le fichier de configuration pour établir la connexion à la base de données
+
+<?php
+// Inclure le fichier de connexion et d'accès aux données
+require_once 'C:\xampp\htdocs\projet_kawen\config.php'; // Assurez-vous que le nom du fichier correspond à celui que vous avez fourni
+
+// Récupérer la connexion à la base de données
+$conn = Config::getConnexion();
+
+// Inclure la classe CUser
+
+
+// Créer une instance de la classe CUser
+$CUser = new CUser();
+
+// Traitement de la modification des données
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Vérifier si les données POST existent
+    if(isset($_POST['id_user']) && isset($_POST['nom_comp']) && isset($_POST['adresse_mail'])) {
+        // Récupérer les valeurs du formulaire
+        $id_user = $_POST['id_user'];
+        $nom_comp = $_POST['nom_comp'];
+        $adresse_mail = $_POST['adresse_mail'];
+        
+        // Appeler la fonction updateUser pour mettre à jour l'utilisateur
+        $CUser->updateUser($id_user, $nom_comp, $adresse_mail);
+
+        // Attendez quelques secondes avant de rediriger pour permettre les modifications dans la base de données
+        sleep(1); // Vous pouvez ajuster ce délai si nécessaire
+
+        // Redirection vers la page d'origine avec un paramètre indiquant que les données ont été modifiées
+        echo "<script>window.location.href = 'afficheru.php?modifie=true';</script>";
+        exit();
+    }
+}
+
+// Récupération des données d'utilisateurs depuis la base de données
+$sql = "SELECT * FROM user";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$liste = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>id_user</th>
+            <th>Nom complet</th>
+            <th>Adresse email</th>
+            <th>Mot de passe</th>
+            <th>Role</th>
+            <th>Actions</th>
+            <th>Modifier</th>
+            <th>supprimer</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($liste as $user): ?>
+        <tr> 
+            <td><?php echo $user['id_user']; ?></td>
+            <td><?php echo $user['nom_comp']; ?></td>
+            <td><?php echo $user['adresse_mail']; ?></td>
+            <td><?php echo $user['mdp']; ?></td>
+            <td><?php echo $user['roles']; ?></td>
+            <td>
+                <!-- Bouton Modifier -->
+                <button onclick="modifier(<?php echo $user['id_user']; ?>)">Modifier</button>
+            </td>
+            <td>
+                <!-- Formulaire pour modifier les données -->
+                <form id="form_<?php echo $user['id_user']; ?>" style="display: none;" method="post">
+                    <!-- Champs pour les données à modifier -->
+                    <input type="hidden" name="id_user" value="<?php echo $user['id_user']; ?>">
+                    <input type="text" name="nom_comp" value="<?php echo $user['nom_comp']; ?>">
+                    <input type="text" name="adresse_mail" value="<?php echo $user['adresse_mail']; ?>">
+                    <!-- Ajoutez d'autres champs selon les besoins -->
+                    <!-- Bouton Enregistrer -->
+                    <button type="submit">Enregistrer</button>
+                </form>
+            </td>
+            <td>
+                <!-- Formulaire pour supprimer l'utilisateur -->
+                <form method="post">
+                    <input type="hidden" name="id_user" value="<?php echo $user['id_user']; ?>">
+                    <button type="submit" name="supprimer">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+
+</table>
+<div>
+<h2>Statistiques par pourcentage</h2>
+<ul>
+    <?php foreach ($roleCounts as $role): ?>
+        <?php
+        // Calcul du pourcentage de chaque rôle
+        $percentage = ($role['count'] / $totalUsers) * 100;
+        // Déterminez la classe en fonction du pourcentage
+        $class = '';
+        if ($percentage <= 33) {
+            $class = 'low';
+        } elseif ($percentage <= 66) {
+            $class = 'medium';
+        } else {
+            $class = 'high';
+        }
+        ?>
+        <li><span class="circle <?php echo $class; ?>"><?php echo round($percentage, 2); ?>%</span> <?php echo $role['roles']; ?></li>
+    <?php endforeach; ?>
+</ul>
+
+
+<script>
+    function modifier(userId) {
+        // Afficher le formulaire correspondant à l'utilisateur sélectionné
+        document.getElementById('form_' + userId).style.display = 'table-row';
+    }
+</script>
+
+ 
+
+
 
                 </div>
                 <!-- /.container-fluid -->
