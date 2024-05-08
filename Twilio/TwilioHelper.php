@@ -8,8 +8,8 @@ class TwilioHelper {
     // Fonction pour envoyer un message SMS via Twilio
     public static function envoyerSMS($numeroDestinataire, $message) {
         // Remplacez ces valeurs par vos propres identifiants Twilio
-        $accountSid = 'AC222654a0d6df83bbc6aebf0b34708b95';
-        $authToken = '73af507e99c26851478215429f9c9383';
+        // $accountSid = 'AC222654a0d6df83bbc6aebf0b34708b95';
+        // $authToken = '73af507e99c26851478215429f9c9383';
         $numeroTwilio = '+14053582205';
 
         // Initialiser le client Twilio
