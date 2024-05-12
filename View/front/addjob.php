@@ -1,11 +1,12 @@
 <?php
 include '../../Model/offre.php';
 include '../../Control/jobControl.php';
+include './add_notifications.php';
 
 $error = '';
 $success = false;
 
-
+$notifController = new NotificationController();
 $jobController = new JobControl();
 // Check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -35,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Ajouter le job à la base de données
         if ($jobController->createOffre($jobDetails)) {
+            $notifController->addNotification(new Notif(null, "Vouz Avez ajouter l'offre", null));
             $success = true;
             unset($_POST);
             header('Location:job-list.php');

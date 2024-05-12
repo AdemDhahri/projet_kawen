@@ -4,6 +4,9 @@ include '../../Model/offre.php';
 include '../../Control/jobControl.php';
 include '../../Model/condidature.php';
 include '../../Control/condidaControl.php';
+include './add_notifications.php';
+
+$notifController = new NotificationController();
 
 
 // Check if the ID parameter is set in the URL
@@ -56,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Ajouter le job à la base de données
             if ($condidaControl->updateC($updated)) {
+            $notifController->addNotification(new Notif(null, "Vouz Avez modifier le condida", null));
                 $success = true;
                 header('Location:lista.php');
             } else {

@@ -1,3 +1,22 @@
+<?php
+// Inclure le fichier jobControl.php
+include '../../Model/offre.php';
+include '../../Control/jobControl.php';
+include '../../Model/notif.php';
+include './notification_admin.php';
+
+// Créer une instance de la classe JobControl
+$jobController = new JobControl();
+
+$notifController = new NotificationAdmin();
+
+// Appeler la méthode getAllOffres() pour récupérer toutes les offres d'emploi
+$offres = $jobController->getAllOffres();
+$offres_json = json_encode($offres);
+
+$notifications = $notifController->getNotifications();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -115,7 +134,7 @@
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
                         <a class="collapse-item" href="404.html">404 Page</a>
-                        
+
                     </div>
                 </div>
             </li>
@@ -335,8 +354,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="../../assests/back/img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="../../assests/back/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -381,56 +399,26 @@
 
                         <div class="col-xl-8 col-lg-7">
 
-                            <!-- Area Chart -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
-                                    </div>
-                                    <hr>
-                                    Styling for the area chart can be found in the
-                                    <code>/js/demo/chart-area-demo.js</code> file.
-                                </div>
-                            </div>
 
                             <!-- Bar Chart -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="chart-bar">
-                                        <canvas id="myBarChart"></canvas>
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-4">
+                                    <!-- Titre du graphique -->
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">Statistique par niveau</h6>
                                     </div>
-                                    <hr>
-                                    Styling for the bar chart can be found in the
-                                    <code>/js/demo/chart-bar-demo.js</code> file.
+                                    <!-- Corps du graphique -->
+                                    <div class="card-body">
+                                        <div class="chart-bar">
+                                            <canvas id="levelChart"></canvas>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                         </div>
 
-                        <!-- Donut Chart -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Donut Chart</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <hr>
-                                    Styling for the donut chart can be found in the
-                                    <code>/js/demo/chart-pie-demo.js</code> file.
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
 
                 </div>
@@ -497,6 +485,36 @@
     <script src="../../assests/back/js/demo/chart-area-demo.js"></script>
     <script src="../../assests/back/js/demo/chart-pie-demo.js"></script>
     <script src="../../assests/back/js/demo/chart-bar-demo.js"></script>
+
+    <script>
+    const offresData = <?php echo $offres_json; ?>;
+    // Initialise le graphique avec Chart.js
+    const titres = offresData.map((item, index) => item.titre);
+    const niveaux = offresData.map((item, index) => item.nbrP);
+
+    const levelChart = new Chart(document.getElementById('levelChart'), {
+        type: 'bar',
+        data: {
+            labels: titres,
+            datasets: [{
+                label: 'Nombre des posts',
+                data: niveaux,
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
 
 </body>
 

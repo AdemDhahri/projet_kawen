@@ -1,4 +1,3 @@
-
 <?php
 include_once "../../config.php";
 class notif
@@ -7,7 +6,7 @@ class notif
     private $idn;
     private $message;
     private $date;
-    
+
 
 
     // Constructor
@@ -16,7 +15,7 @@ class notif
         $this->idn = $idn;
         $this->message = $message;
         $this->date = $date;
-      
+
 
     }
 
@@ -45,20 +44,4 @@ class notif
     {
         return $this->date;
     }
-
-    public function addNotification($message, $date)
-    {
-        // Utilisation de la connexion à la base de données depuis config.php
-        $pdo = config::getConnexion();
-
-        // Préparer la requête SQL pour insérer une nouvelle notification
-        $query = $pdo->prepare("INSERT INTO notifications (message, date) VALUES (:message, :date)");
-
-        // Exécuter la requête avec les valeurs fournies
-        $query->execute(array(':message' => $message, ':date' => $date));
-
-        // Vérifier si l'insertion a réussi et retourner true ou false en conséquence
-        return $query ? true : false;
-    }
-
 }

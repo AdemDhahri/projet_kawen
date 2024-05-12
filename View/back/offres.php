@@ -2,12 +2,18 @@
 // Inclure le fichier jobControl.php
 include '../../Model/offre.php';
 include '../../Control/jobControl.php';
+include '../../Model/notif.php';
+include './notification_admin.php';
 
 // Créer une instance de la classe JobControl
 $jobController = new JobControl();
 
+$notifController = new NotificationAdmin();
+
 // Appeler la méthode getAllOffres() pour récupérer toutes les offres d'emploi
 $offres = $jobController->getAllOffres();
+
+$notifications = $notifController->getNotifications();
 
 
 // Vérification de la requête POST
@@ -27,9 +33,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $offres = array_filter($offres, function ($job) use ($id) {
                 return $job['id_o'] != $id;
             });
+            if ($notifController->addNotification(new Notif(null, "Vouz Avez Supprimér l'offre", null))) {
+                $notifications = $notifController->getNotifications();
+            } else {
+                $success = false;
+            }
         } else {
             // Gestion de l'erreur en cas d'échec de la suppression
             echo "Erreur lors de la suppression de l'offre.";
+        }
+    }
+
+    if (isset($_POST["idn"])) {
+        $idn = $_POST["idn"];
+        if ($notifController->deleteNotification($idn)) {
+            $notifications = array_filter($notifications, function ($notification) use ($idn) {
+                return $notification["idn"] != $idn;
+            });
         }
     }
 }
@@ -158,7 +178,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="charts.php">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Charts</span></a>
             </li>
@@ -249,12 +269,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         <!-- Nav Item - Alerts -->
                         <!-- Nav Item - Alerts -->
-<li class="nav-item dropdown no-arrow mx-1">
-    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-bell fa-fw"></i>
-        <!-- Counter - Alerts -->
-        <span class="badge badge-danger badge-counter"><?php echo count($notifications); ?></span>
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span
+                                    class="badge badge-danger badge-counter"><?php echo count($notifications); ?></span>
                             </a>
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -262,26 +283,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <h6 class="dropdown-header">
                                     Notifications
                                 </h6>
+
                                 <?php
-                                // Récupérer les notifications à afficher depuis un fichier ou une base de données
-                                foreach ($notifications as $notification) {
-                                    echo '<a class="dropdown-item d-flex align-items-center" href="#">';
-                                    echo '<div class="mr-3">';
-                                    echo '<div class="icon-circle bg-primary">';
-                                    echo '<i class="fas fa-file-alt text-white"></i>';
-                                    echo '</div>';
-                                    echo '</div>';
-                                    echo '<div>';
-                                    echo '<div class="small text-gray-500">' . $notification['date'] . '</div>';
-                                    echo '<span class="font-weight-bold">' . $notification['message'] . '</span>';
-                                    echo '</div>';
-                                    echo '</a>';
+
+                                // Afficher les notifications
+                                foreach ($notifications as $index => $notification) {
+                                    ?>
+                                    <form action="" method="post" name="deleteNotif">
+                                        <input type="hidden" name="idn" value="<?php echo $notification['idn']; ?>">
+                                        <button class="dropdown-item text-center small text-gray-500">
+                                            <?php echo $notification["message"]; ?>
+                                        </button>
+                                    </form>
+                                    <?php
                                 }
                                 ?>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Voir toutes les notifications</a>
                             </div>
                         </li>
-
 
 
                         <!-- Nav Item - Messages -->
@@ -522,7 +540,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <script src="../../assests/back/js/sb-admin-2.min.js"></script>
 
-    
+
 
 </body>
 

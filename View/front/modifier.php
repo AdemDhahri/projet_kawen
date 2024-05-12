@@ -2,6 +2,11 @@
 
 include '../../Model/offre.php';
 include '../../Control/jobControl.php';
+include './add_notifications.php';
+
+
+$notifController = new NotificationController();
+
 
 // Check if the ID parameter is set in the URL
 if (isset($_GET['id'])) {
@@ -43,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Ajouter le job à la base de données
         if ($jobController->updateOffre($offer_id, $jobDetails)) {
+            $notifController->addNotification(new Notif(null, "Vouz Avez modifier l'offre", null));
             $success = true;
             unset($_POST);
             header('Location:job-list.php');

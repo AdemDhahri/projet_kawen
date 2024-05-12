@@ -4,6 +4,10 @@ include '../../Model/offre.php';
 include '../../Control/condidaControl.php';
 include '../../Model/condidature.php';
 include '../../Control/jobControl.php';
+include './add_notifications.php';
+
+
+$notifController = new NotificationController();
 
 // Check if the ID parameter is set in the URL
 if (isset($_GET['id_o'])) {
@@ -37,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $condidats = array_filter($condidats, function ($job) use ($CIN) {
                 return $job['cin'] != $CIN;
             });
+            $notifController->addNotification(new Notif(null, "Vouz Avez supprimer le condida", null));
         } else {
             // Gestion de l'erreur en cas d'échec de la suppression
             echo "Erreur lors de la suppression de l'offre.";
