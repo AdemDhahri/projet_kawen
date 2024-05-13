@@ -34,13 +34,16 @@ try {
     if ($origin === "front") {
         $subject = 'Mot de passe oublié';
         $body = 'Bonjour, voici votre lien pour modifier votre mot de passe : <a href=\'http://localhost/projet_kawen/view/front/resete.html\'>Cliquez ici</a>';
+            header("Location: http://localhost/projet_kawen/view/front/login.php");
     } elseif ($origin === "back") {
         $subject = 'Informations sur votre compte';
         $body = 'Bonjour, voici les informations sur votre compte : ' . $message;
+        header("Location: http://localhost/projet_kawen/view/back/sendmailut.php");
     } else {
         // Gérer d'autres cas si nécessaire
         $subject = 'Demande de mot de passe ou de compte';
         $body = 'Bonjour, nous avons reçu votre demande, veuillez nous contacter pour plus d\'informations.';
+        //header("Location: http://localhost/projet_kawen/view/front/login.php");
     }
 
     $mail->isHTML(true);
@@ -55,5 +58,5 @@ try {
 }
 
 // Rediriger vers la page de login
-header("Location: http://localhost/projet_kawen/view/front/login.php");
+//header("Location: http://localhost/projet_kawen/view/front/login.php");
 ?>

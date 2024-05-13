@@ -170,7 +170,7 @@ if (isset($_POST['submit'])) {
                 <span class="error-message" id="captchaError"></span>
 
                     <a class="pull-right" href="RecupererMdp.php">Mot de passe perdu?</a>
-                    <a class="pull-right" href="meteo.php">Mot de passe perdu?</a>
+                   
                     
                     <div class="field">
                         <div class="field btn">
