@@ -191,7 +191,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <div class="btn-row">
                                             <!-- Ajouter ici les boutons pour les actions -->
                                             <button type="button" class="btn btn-primary">
-                                                <a href="modifier.php?id=<?php echo $offre['id_o']; ?>">
+                                                <a href="modifierO.php?id=<?php echo $offre['id_o']; ?>">
                                                     <i class="fa-solid fa-pen-to-square"></i> Modifier
                                                 </a>
                                             </button>
