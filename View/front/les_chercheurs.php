@@ -6,7 +6,6 @@ include('../../Control/actions/add_commentaire.php');
 include('../../Control/actions/Show_commentaire.php');
 include('../../Control/actions/ShowJobsAction.php');
 
-<<<<<<< HEAD
 $events = array();
 if (!empty($tab) && is_array($tab)) {
     foreach ($tab as $event) {
@@ -20,11 +19,6 @@ if (!empty($tab) && is_array($tab)) {
 } else {
  
 }$events_json = json_encode($events);
-=======
-
-
-
->>>>>>> aafae631ea0b323be3f7879d7b0022ba9fa7db77
 
 ?>
 <!DOCTYPE html>
@@ -36,16 +30,12 @@ if (!empty($tab) && is_array($tab)) {
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-<<<<<<< HEAD
     <style>
         #map {
             height: 400px;
             width: 100%;
         }
     </style>
-=======
-
->>>>>>> aafae631ea0b323be3f7879d7b0022ba9fa7db77
     <!-- Favicon -->
     <link href="../../assests/front/img/favicon.ico" rel="icon">
 
@@ -111,8 +101,8 @@ if (!empty($tab) && is_array($tab)) {
                     </div>
                     <a href="contact.php" class="nav-item nav-link">Contactez-nous</a>
                 </div>
-                <a href="login.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">S'inscrire<i class="fa fa-arrow-right ms-3"></i></a>
-            </div>
+                <a href="compte_chercheur.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">mon compte<i
+                        class="fa fa-arrow-right ms-3"></i></a>              </div>
         </nav>
         <!-- Navbar End -->
 
@@ -158,12 +148,8 @@ if (!empty($tab) && is_array($tab)) {
                     <div class="tab-content">
                         <div id="tab-1" class="tab-pane fade show p-0 active">
                             
-<<<<<<< HEAD
                         <?php foreach ($Recruiters as $key => $Recruiter) { 
 ?>
-=======
-                        <?php foreach ($Recruiters as $key => $Recruiter) { ?>
->>>>>>> aafae631ea0b323be3f7879d7b0022ba9fa7db77
     <div class="job-item p-4 mb-4">
         <div class="row g-4">
             <!-- Colonne pour les détails du recruteur -->
@@ -174,26 +160,10 @@ if (!empty($tab) && is_array($tab)) {
                     <!-- Nom et prénom du recruteur -->
                     <h5 class="mb-3"><?= $Recruiter['nom']." ".$Recruiter['prenom'] ?></h5>
                     <!-- Informations de contact du recruteur -->
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> aafae631ea0b323be3f7879d7b0022ba9fa7db77
                     <p class="mb-1"><strong>Téléphone:</strong> <a href="https://wa.me/<?= $Recruiter['tel'] ?>?tel=<?= $Recruiter['tel'] ?>"><?= $Recruiter['tel'] ?></a></p>
                     <p class="mb-1"><strong>Email:</strong> <?= $Recruiter['mail'] ?></p>
                    <p><strong>Ville:</strong> <a href="https://www.google.com/maps/search/<?= urlencode($Recruiter['ville']) ?>"> <?= htmlspecialchars($Recruiter['ville']) ?></a></p>
 <p class="mb-1"><strong>CV:</strong> <?= $Recruiter['cv'] ?></p>
-<<<<<<< HEAD
-=======
-=======
-<<<<<<< HEAD
-                    <p class="mb-1"><strong>Téléphone:</strong> <a href="https://wa.me/<?= $Recruiter['tel'] ?>?tel=<?= $Recruiter['tel'] ?>"><?= $Recruiter['tel'] ?></a></p>
-=======
-                    <p class="mb-1"><strong>Téléphone:</strong> <?= $Recruiter['tel'] ?></p>
-                    <p class="mb-1"><strong>Email:</strong> <?= $Recruiter['mail'] ?></p>
->>>>>>> f0659b432a82cd9ac16ea6d269e1e4b21b3a7dd1
-                    <p class="mb-1"><strong>CV:</strong> <?= $Recruiter['cv'] ?></p>
->>>>>>> 862097749bb1719d7636cd55c517eb5e152bc7d1
->>>>>>> aafae631ea0b323be3f7879d7b0022ba9fa7db77
                     
                     <!-- Bouton pour afficher les détails supplémentaires -->
                     <button class="btn btn-primary btn-sm mt-3 toggle-details">Plus</button>
@@ -236,16 +206,10 @@ if (!empty($tab) && is_array($tab)) {
             </div>
         </div>
     </div>
-<<<<<<< HEAD
     
 <?php } ?>
 
    
-=======
-<?php } ?>
-
-
->>>>>>> aafae631ea0b323be3f7879d7b0022ba9fa7db77
 
 <script>
     // JavaScript to toggle additional details
@@ -263,7 +227,6 @@ if (!empty($tab) && is_array($tab)) {
     });
 </script>
 
-<<<<<<< HEAD
 <div id="map"></div>
 
 <script>
@@ -344,8 +307,6 @@ if (!empty($tab) && is_array($tab)) {
 
 
 
-=======
->>>>>>> aafae631ea0b323be3f7879d7b0022ba9fa7db77
 
                             <a class="btn btn-primary py-3 px-5" href="">Browse More researcher</a>
                         </div>

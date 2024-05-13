@@ -1,11 +1,6 @@
 <?php
 include('../../Model/commentaire.php');
 include('../../Model/chercheur.php');
-<<<<<<< HEAD
-=======
-//include('../../Control/actions/supp_commentaire.php');
-
->>>>>>> aafae631ea0b323be3f7879d7b0022ba9fa7db77
 include('../../Control/actions/Show_commentaire.php');
 
 
@@ -88,8 +83,8 @@ include('../../Control/actions/Show_commentaire.php');
                     </div>
                     <a href="contact.php" class="nav-item nav-link">Contactez-nous</a>
                 </div>
-                <a href="login.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">S'inscrire<i class="fa fa-arrow-right ms-3"></i></a>
-            </div>
+                <a href="compte_chercheur.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">mon compte<i
+                        class="fa fa-arrow-right ms-3"></i></a>            </div>
         </nav>
         <!-- Navbar End -->
 

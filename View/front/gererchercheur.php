@@ -82,8 +82,8 @@ include('../../Control/actions/DeleteJobAction.php');
                     </div>
                     <a href="contact.php" class="nav-item nav-link">Contactez-nous</a>
                 </div>
-                <a href="login.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">S'inscrire<i class="fa fa-arrow-right ms-3"></i></a>
-            </div>
+                <a href="compte_chercheur.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">mon compte<i
+                        class="fa fa-arrow-right ms-3"></i></a>            </div>
         </nav>
         <!-- Navbar End -->
 
@@ -165,20 +165,10 @@ include('../../Control/actions/DeleteJobAction.php');
                 <div class="text-start ps-4">
                     <h5 class="mb-3"><?= $Recruiter['nom']." ".$Recruiter['prenom'] ?></h5>
                     <p class="mb-1"><strong>Téléphone:</strong> <?= $Recruiter['tel'] ?></p>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> aafae631ea0b323be3f7879d7b0022ba9fa7db77
                     <p class="mb-1"><strong>ville:</strong> <?= $Recruiter['ville'] ?></p>
 
                     <p class="mb-1"><strong>Email:</strong> <?= $Recruiter['mail'] ?></p>
 
-<<<<<<< HEAD
-=======
-=======
-                    <p class="mb-1"><strong>Email:</strong> <?= $Recruiter['mail'] ?></p>
->>>>>>> 862097749bb1719d7636cd55c517eb5e152bc7d1
->>>>>>> aafae631ea0b323be3f7879d7b0022ba9fa7db77
                     <p class="mb-1"><strong>CV:</strong> <?= $Recruiter['cv'] ?></p>
                     <button class="btn btn-primary btn-sm mt-3 toggle-details">Plus</button>
                     <!-- Additional attributes will be toggled by JavaScript -->

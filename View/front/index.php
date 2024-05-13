@@ -46,8 +46,8 @@
 
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-            <a href="index.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
-                <img src="../../assests/front/img/kaween3.png" alt="" width="200" height="50" />
+            <a href="index.html" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
+                <img src="/assests/front/img/kaween3.png" alt="" width="200" height="50" />
             </a>
             <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
                 data-bs-target="#navbarCollapse">
@@ -55,28 +55,25 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="index.php" class="nav-item nav-link active">Accueil</a>
-                    <a href="about.php" class="nav-item nav-link">A PROPOS</a>
+                    <a href="index.html" class="nav-item nav-link active">Accueil</a>
+                    <a href="about.html" class="nav-item nav-link">A PROPOS</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">chercheur</a>
+                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">chercheur</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="addchercheur.php" class="dropdown-item">ajouter chercheur</a>
-                            <a href="gererchercheur.php" class="dropdown-item">mes annonces</a>
-                            <a href="les_chercheurs.php" class="dropdown-item">les chercheurs</a>
-
+                            <a href="chercheur_index.php" class="dropdown-item">les chercheurs</a>
                     
                         </div>
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Partenaires</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="category.php" class="dropdown-item">Formations</a>
-                            <a href="testimonial.php" class="dropdown-item">Nos Offres</a>
-                            <a href="404.php" class="dropdown-item">Cours En Ligne </a>
+                            <a href="category.html" class="dropdown-item">Formations</a>
+                            <a href="testimonial.html" class="dropdown-item">Nos Offres</a>
+                            <a href="404.html" class="dropdown-item">Cours En Ligne </a>
                         </div>
                     </div>
 
-                    <a href="contact.php" class="nav-item nav-link">Contactez-nous</a>
+                    <a href="reclam_index.php" class="nav-item nav-link">Réclamations</a>
                 </div>
                 <a href="login.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">S'inscrire<i
                         class="fa fa-arrow-right ms-3"></i></a>
@@ -89,7 +86,7 @@
         <div class="container-fluid p-0">
             <div class="owl-carousel header-carousel position-relative">
                 <div class="owl-carousel-item position-relative">
-                    <img class="img-fluid" src="../../assests/front/img/carousel-1.jpg" alt="">
+                    <img class="img-fluid" src="/assests/front/img/carousel-1.jpg" alt="">
                     <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
                         style="background: rgba(43, 57, 64, .5);">
                         <div class="container">
@@ -111,7 +108,7 @@
                     </div>
                 </div>
                 <div class="owl-carousel-item position-relative">
-                    <img class="img-fluid" src="../../assests/front/img/carousel-2.jpg" alt="">
+                    <img class="img-fluid" src="/assests/front/img/carousel-2.jpg" alt="">
                     <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
                         style="background: rgba(43, 57, 64, .5);">
                         <div class="container">
@@ -133,7 +130,7 @@
                     </div>
                 </div>
                 <div class="owl-carousel-item position-relative">
-                    <img class="img-fluid" src="../../assests/front/img/imm.jpg" alt="">
+                    <img class="img-fluid" src="/assests/front/img/imm.jpg" alt="">
                     <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
                         style="background: rgba(43, 57, 64, .5);">
                         <div class="container">
@@ -143,7 +140,7 @@
                                         nos cours. Boostez votre carrière!</h1>
                                     <p class="fs-5 fw-medium text-white mb-4 pb-2">Explorez nos offres et remises dès
                                         maintenant!</p>
-                                    <a href="testimonial.php"
+                                    <a href="testimonial.html"
                                         class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Découvrir les
                                         Offres</a>
 
@@ -267,17 +264,17 @@
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                         <div class="row g-0 about-bg rounded overflow-hidden">
                             <div class="col-6 text-start">
-                                <img class="img-fluid w-100" src="../..../../assests/front/img/about-1.jpg">
+                                <img class="img-fluid w-100" src="../../assests/front/img/about-1.jpg">
                             </div>
                             <div class="col-6 text-start">
-                                <img class="img-fluid" src="../..../../assests/front/img/about-2.jpg"
+                                <img class="img-fluid" src="../../assests/front/img/about-2.jpg"
                                     style="width: 85%; margin-top: 15%;">
                             </div>
                             <div class="col-6 text-end">
-                                <img class="img-fluid" src="../..../../assests/front/img/about-3.jpg" style="width: 85%;">
+                                <img class="img-fluid" src="../../assests/front/img/about-3.jpg" style="width: 85%;">
                             </div>
                             <div class="col-6 text-end">
-                                <img class="img-fluid w-100" src="../..../../assests/front/img/about-4.jpg">
+                                <img class="img-fluid w-100" src="../../assests/front/img/about-4.jpg">
                             </div>
                         </div>
                     </div>

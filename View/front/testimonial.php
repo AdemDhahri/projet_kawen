@@ -46,8 +46,8 @@
 
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-            <a href="index.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
-                <img src="../../assests/front/img/kaween3.png" alt="" width="200" height="50" />
+            <a href="index.html" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
+                <img src="/assests/front/img/kaween3.png" alt="" width="200" height="50" />
             </a>
             <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
                 data-bs-target="#navbarCollapse">
@@ -55,28 +55,27 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="index.php" class="nav-item nav-link">ACCUEIL</a>
-                    <a href="about.php" class="nav-item nav-link">A PROPOS</a>
+                    <a href="index.html" class="nav-item nav-link">ACCUEIL</a>
+                    <a href="about.html" class="nav-item nav-link">A PROPOS</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">chercheur</a>
+                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">chercheur</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="addchercheur.php" class="dropdown-item">ajouter chercheur</a>
+                            <a href="addchercheur.php" class="dropdown-item active">ajouter chercheur</a>
                             <a href="gererchercheur.php" class="dropdown-item">mes annonces</a>
-                            <a href="gererchercheur.php" class="dropdown-item">les chercheurs</a>
-
+                            <a href="les_chercheurs.php" class="dropdown-item">les chercheurs</a>>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Partenaires</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="category.php" class="dropdown-item">formations</a>
-                            <a href="testimonial.php" class="dropdown-item active">Nos Offres</a>
-                            <a href="404.php" class="dropdown-item">Cour en Ligne</a>
+                            <a href="category.html" class="dropdown-item">formations</a>
+                            <a href="testimonial.html" class="dropdown-item active">Nos Offres</a>
+                            <a href="404.html" class="dropdown-item">Cour en Ligne</a>
                         </div>
                     </div>
-                    <a href="contact.php" class="nav-item nav-link">Contactez-nous</a>
+                    <a href="contact.html" class="nav-item nav-link">Contactez-nous</a>
                 </div>
-                <a href="login.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">S'inscrire<i
+                <a href="compte_chercheur.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">mon compte<i
                         class="fa fa-arrow-right ms-3"></i></a>
             </div>
         </nav>
@@ -109,7 +108,7 @@
                         <p>"Étudiants, économisez sur vos cours et développez vos compétences avec nos remises
                             exclusives!</p>
                         <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src="../../assests/front/img/special.jpg"
+                            <img class="img-fluid flex-shrink-0 rounded" src="/assests/front/img/special.jpg"
                                 style="width: 50px; height: 50px;">
                             <div class="ps-3">
                                 <h5 class="mb-1"></h5>Offre pour les étudiants </h5>
@@ -122,7 +121,7 @@
                         <p>Profitez des remises printanières et fleurissez votre apprentissage avec des offres
                             spéciales!</p>
                         <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src="../../assests/front/img/imm.jpg"
+                            <img class="img-fluid flex-shrink-0 rounded" src="/assests/front/img/imm.jpg"
                                 style="width: 50px; height: 50px;">
                             <div class="ps-3">
                                 <h5 class="mb-1">Offre du printemps </h5>
@@ -135,7 +134,7 @@
                         <p>Des remises exceptionnelles pour le Black Friday - Ne manquez pas cette occasion de faire des
                             économies sur vos cours!</p>
                         <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src="../../assests/front/img/bf.png"
+                            <img class="img-fluid flex-shrink-0 rounded" src="/assests/front/img/bf.png"
                                 style="width: 50px; height: 50px;">
                             <div class="ps-3">
                                 <h5 class="mb-1">Black Friday</h5>
@@ -241,7 +240,7 @@
     <script src="../../assests/front/lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="../../assests/front/js/main.js"></script>
+    <script src="/assests/front/js/main.js"></script>
 </body>
 
 </html>

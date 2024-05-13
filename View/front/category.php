@@ -9,7 +9,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="../../assests/front/img/favicon.ico" rel="icon">
+    <link href="/assests/front/img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +46,7 @@
 
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-            <a href="index.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
+            <a href="index.html" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
                 <img src="../../assests/front/img/kaween3.png" alt="" width="200" height="50" />
             </a>
             <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
@@ -55,28 +55,27 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="index.php" class="nav-item nav-link">Home</a>
-                    <a href="about.php" class="nav-item nav-link">About</a>
+                    <a href="index.html" class="nav-item nav-link">Home</a>
+                    <a href="about.html" class="nav-item nav-link">About</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">chercheur</a>
+                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">chercheur</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="addchercheur.php" class="dropdown-item">ajouter chercheur</a>
+                            <a href="addchercheur.php" class="dropdown-item active">ajouter chercheur</a>
                             <a href="gererchercheur.php" class="dropdown-item">mes annonces</a>
                             <a href="les_chercheurs.php" class="dropdown-item">les chercheurs</a>
-
                         </div>
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="category.php" class="dropdown-item active">Job Category</a>
-                            <a href="testimonial.php" class="dropdown-item">Testimonial</a>
-                            <a href="404.php" class="dropdown-item">404</a>
+                            <a href="category.html" class="dropdown-item active">Job Category</a>
+                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                            <a href="404.html" class="dropdown-item">404</a>
                         </div>
                     </div>
-                    <a href="contact.php" class="nav-item nav-link">Contactez-nous</a>
+                    <a href="contact.html" class="nav-item nav-link">Contactez-nous</a>
                 </div>
-                <a href="login.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">S'inscrire<i
+                <a href="compte_chercheur.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">mon compte<i
                         class="fa fa-arrow-right ms-3"></i></a>
             </div>
         </nav>
@@ -241,10 +240,10 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../assests/front/lib/wow/wow.min.js"></script>
-    <script src="../../assests/front/lib/easing/easing.min.js"></script>
-    <script src="../../assests/front/lib/waypoints/waypoints.min.js"></script>
-    <script src="../../assests/front/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/assests/front/lib/wow/wow.min.js"></script>
+    <script src="/assests/front/lib/easing/easing.min.js"></script>
+    <script src="/assests/front/lib/waypoints/waypoints.min.js"></script>
+    <script src="/assests/front/lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
     <script src="../../assests/front/js/main.js"></script>
