@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-            <a href="index.html" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
+            <a href="index.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
                 <img src="../../assests/front/img/kaween3.png" alt="" width="200" height="50" />
             </a>
             <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
@@ -107,7 +107,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="index.html" class="nav-item nav-link">Accueil</a>
+                    <a href="index.php" class="nav-item nav-link">Accueil</a>
+                    <a href="job-list.php" class="nav-item nav-link ">Nos offres</a>
                     <a href="about.html" class="nav-item nav-link">A propos</a>
                     <a href="job-list.php" class="nav-item nav-link">Jobs</a>
                     <div class="nav-item dropdown">
@@ -180,36 +181,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         // Afficher chaque offre dans une liste
                         foreach ($offres as $index => $offre) {
                             ?>
-                            <div class="col-md-6 mb-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><?php echo $offre['titre']; ?></h5>
-                                        <p class="card-text">Email du recruteur: <?php echo $offre['email_r']; ?></p>
-                                        <p class="card-text">Salaire: <?php echo $offre['salaire']; ?></p>
-                                        <p class="card-text">Localisation: <?php echo $offre['localisation']; ?></p>
-                                        <p class="card-text">Horaire: <?php echo $offre['horaire']; ?></p>
-                                        <div class="btn-row">
-                                            <!-- Ajouter ici les boutons pour les actions -->
-                                            <button type="button" class="btn btn-primary">
-                                                <a href="modifierO.php?id=<?php echo $offre['id_o']; ?>">
-                                                    <i class="fa-solid fa-pen-to-square"></i> Modifier
-                                                </a>
-                                            </button>
-                                            <button type="button" class="btn btn-dark">
-                                                <a href="job-detail.php?id=<?php echo $offre['id_o']; ?>">
-                                                    <i class="fa-solid fa-info"></i> Détails
-                                                </a>
-                                            </button>
-                                            <form action="" id="deleteForm" name="deleteForm" method="post">
-                                                <input type="hidden" name="id" value="<?php echo $offre['id_o']; ?>">
-                                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i>
-                                                    Supprimer</button>
-                                            </form>
+                                <div class="col-md-6 mb-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><?php echo $offre['titre']; ?></h5>
+                                            <p class="card-text">Email du recruteur: <?php echo $offre['email_r']; ?></p>
+                                            <p class="card-text">Salaire: <?php echo $offre['salaire']; ?></p>
+                                            <p class="card-text">Localisation: <?php echo $offre['localisation']; ?></p>
+                                            <p class="card-text">Horaire: <?php echo $offre['horaire']; ?></p>
+                                            <div class="btn-row">
+                                                <!-- Ajouter ici les boutons pour les actions -->
+                                                <button type="button" class="btn btn-primary">
+                                                    <a href="modifierO.php?id=<?php echo $offre['id_o']; ?>">
+                                                        <i class="fa-solid fa-pen-to-square"></i> Modifier
+                                                    </a>
+                                                </button>
+                                                <button type="button" class="btn btn-dark">
+                                                    <a href="job-detail.php?id=<?php echo $offre['id_o']; ?>">
+                                                        <i class="fa-solid fa-info"></i> Détails
+                                                    </a>
+                                                </button>
+                                                <form action="" id="deleteForm" name="deleteForm" method="post">
+                                                    <input type="hidden" name="id" value="<?php echo $offre['id_o']; ?>">
+                                                    <button class="btn btn-danger"><i class="fa-solid fa-trash"></i>
+                                                        Supprimer</button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <?php
+                                <?php
                         }
                         ?>
                     </div>

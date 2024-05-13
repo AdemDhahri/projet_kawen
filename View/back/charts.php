@@ -140,18 +140,19 @@ $notifications = $notifController->getNotifications();
             </li>
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item active">
-                <a class="nav-link" href="charts.html">
+            <li class="nav-item">
+                <a class="nav-link" href="charts.php">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Charts</span></a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item ">
                 <a class="nav-link" href="offres.php">
                     <i class="fas fa-briefcase"></i>
                     <span>Offres de travail</span></a>
             </li>
-            <li class="nav-item">
+
+            <li class="nav-item active">
                 <a class="nav-link" href="condidature.php">
                     <i class="fas fa-user-check"></i>
                     <span>Les condidatures</span></a>
