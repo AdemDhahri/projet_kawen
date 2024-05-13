@@ -74,7 +74,7 @@
                         </div>
                     </div>
 
-                    <a href="contact.html" class="nav-item nav-link">Contactez-nous</a>
+                    <a href="liste_r.php" class="nav-item nav-link">Réclamations</a>
                 </div>
                 <a href="login.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">S'inscrire<i
                         class="fa fa-arrow-right ms-3"></i></a>

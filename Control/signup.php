@@ -1,6 +1,6 @@
 <?php
 // Inclusion de la configuration et de la classe Offre
-include "C:/xampp/htdocs/projet_kawen/config.php";
+include "../../config.php";
 
 class CUser
 { 

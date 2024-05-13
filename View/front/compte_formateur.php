@@ -19,7 +19,7 @@ if (isset($_SESSION['id_user'])) {
 }
 ?> -->
              <?php
-                require_once 'C:\xampp\htdocs\projet_kawen\config.php'; // Assurez-vous que le nom du fichier correspond à celui que vous avez fourni
+                require_once '../../config.php'; // Assurez-vous que le nom du fichier correspond à celui que vous avez fourni
 
 // Récupérer la connexion à la base de données
 $conn = Config::getConnexion();
