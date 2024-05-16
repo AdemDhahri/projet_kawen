@@ -1,3 +1,12 @@
+<?php
+include('../../Model/chercheur.php');
+
+
+include('../../Control/actions/ShowJobsAction.php');
+include('../../View/back/deleteback.php');
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,13 +21,13 @@
     <title>SB Admin 2 - Blank</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../../assests/back/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../../assests/back/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -200,7 +209,6 @@
                                 </form>
                             </div>
                         </li>
-
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
@@ -268,7 +276,7 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                        <img class="rounded-circle" src="../../assests/back/img/undraw_profile_1.svg"
                                             alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
@@ -280,7 +288,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                        <img class="rounded-circle" src="../../assests/back/img/undraw_profile_2.svg"
                                             alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
@@ -292,7 +300,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                        <img class="rounded-circle" src="../../assests/back/img/undraw_profile_3.svg"
                                             alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
@@ -326,8 +334,9 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                                 <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                    src="../../assests/back/img/undraw_profile.svg">
                             </a>
+
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
@@ -363,6 +372,42 @@
                     <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
 
                 </div>
+                
+                <?php foreach ($allCours as $key => $coursK) { ?>
+<!-- "< ?= ?>" => echo/afficher -->
+                                <div class="job-item p-4 mb-4">
+                                    <div class="row g-4">
+                                        <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                            <div class="text-start ps-4">
+                                                <h5 class="mb-3"><?= $coursK['Titre']." ".$coursK['Description'] ?></h5>
+                                                <span class="text-truncate me-3"> 🎏<?= $coursK['Categorie'] ?></span>
+                                                <span class="text-truncate me-3"> 📜<?= $coursK['Format'] ?></span>
+                                                <span class="text-truncate me-0">🗓️ <?= $coursK['DatePost'] ?></span>
+                                                <span class="text-truncate me-0"> 🗓️<?= $coursK['DateExpir'] ?></span>
+                                                <span class="text-truncate me-0"> 🗣<?= $coursK['Langue'] ?></span>
+                                                <span class="text-truncate me-3">💰<?= $coursK['Prix'] ?></span>
+                                                <span class="text-truncate me-0">🪄 <?= $coursK['CompetencesAcquises'] ?></span>
+                                                <span class="text-truncate me-0"> 📚<?= $coursK['Prerequis'] ?></span>
+                                                <span class="text-truncate me-0">🎁 <?= $coursK['Certification'] ?></span>
+                                                <span class="text-truncate me-0"> <?= $coursK['IdFormateur'] ?></span>
+                                                <span class="text-truncate me-0">📁<?= $coursK['Support'] ?></span>
+
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <div class="d-flex mb-3">
+    <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a>
+    <a class="btn btn-secondary me-3" href="../../View/back/deleteback.php?id=<?= $coursK['IdCours']; ?>" name="delete_id" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce poste ?');">Supprimer</a>
+</div>
+
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+
                 <!-- /.container-fluid -->
 
             </div>
@@ -410,14 +455,14 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assests/back/vendor/jquery/jquery.min.js"></script>
+    <script src="../../assests/back/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../../assests/back/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="../../assests/back/js/sb-admin-2.min.js"></script>
 
 </body>
 

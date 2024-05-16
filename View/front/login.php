@@ -30,7 +30,7 @@
           <div class="field">
             <input type="password" placeholder="Password" required />
           </div>
-          <div class="pass-link"><a href="forgetpassword.html">Forgot password?</a></div>
+          <div class="pass-link"><a href="forgetpassword.php">Forgot password?</a></div>
           <div class="field btn">
             <div class="btn-layer"></div>
             <input type="submit" value="Login" />

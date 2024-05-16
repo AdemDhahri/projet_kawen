@@ -1,6 +1,23 @@
+<?php 
+include('../../Model/abonnement.php');
+include('../../Model/abonnementControl.php');
+
+include('../../Control/actions/updateabonnement.php');
+
+?>
 <!DOCTYPE html>
 <html lang="en">
+<script>
+   document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('inscriptionFormAbonnement').addEventListener('submit', function(event) {
+                var Type = document.forms["inscriptionForm"]["Type"].value;
+                var StatutPaiement = document.forms["inscriptionForm"]["StatutPaiement"].value;
+                var MethodeDePaiement = document.forms["inscriptionForm"]["MethodeDePaiement"].value;
+                var Prix = document.forms["inscriptionForm"]["Prix"].value;
 
+            });
+        });
+    </script>
 <head>
     <meta charset="utf-8">
     <title>JobEntry - Job Portal Website Template</title>
@@ -46,7 +63,7 @@
 
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-            <a href="index.html" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
+            <a href="index.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
                 <img src="../../assests/front/img/kaween3.png" alt="" width="200" height="50" />
             </a>
             <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
@@ -55,26 +72,27 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="index.html" class="nav-item nav-link">Home</a>
-                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="index.php" class="nav-item nav-link">Accueil</a>
+                    <a href="about.php" class="nav-item nav-link">A propos</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Jobs</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Cours</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="job-list.html" class="dropdown-item">Job List</a>
-                            <a href="job-detail.html" class="dropdown-item">Job Detail</a>
+                            <a href="addchercheur.php" class="dropdown-item">ajouter cours</a>
+                            <a href="gerercours.php" class="dropdown-item">les cours</a>
+                    
                         </div>
                     </div>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="category.html" class="dropdown-item active">Job Category</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                            <a href="404.html" class="dropdown-item">404</a>
+                            <a href="category.php" class="dropdown-item">Job Category</a>
+                            <a href="testimonial.php" class="dropdown-item">Nos offres</a>
+                            <a href="404.php" class="dropdown-item">404</a>
                         </div>
                     </div>
-                    <a href="contact.html" class="nav-item nav-link">Contactez-nous</a>
+                    <a href="contact.php" class="nav-item nav-link">Contactez-nous</a>
                 </div>
-                <a href="login.html" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">S'inscrire<i
+                <a href="login.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">S'inscrire<i
                         class="fa fa-arrow-right ms-3"></i></a>
             </div>
         </nav>
@@ -84,86 +102,97 @@
         <!-- Header End -->
         <div class="container-xxl py-5 bg-dark page-header mb-5">
             <div class="container my-5 pt-5 pb-4">
-                <h1 class="display-3 text-white mb-3 animated slideInDown">Category</h1>
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Cours List</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb text-uppercase">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                        <li class="breadcrumb-item text-white active" aria-current="page">Category</li>
+                        <li class="breadcrumb-item text-white active" aria-current="page"> Cours List</li>
                     </ol>
                 </nav>
             </div>
         </div>
         <!-- Header End -->
 
+<!-- Section Annonce Chercheur d'Emploi -->
+<!-- Formulaire pour l'annonce du chercheur d'emploi -->
+<div class="container py-5">
+    <h2>Publier une Annonce de Chercheur d'Emploi</h2>
 
-        <!-- Category Start -->
-        <div class="container-xxl py-5">
-            <div class="container">
-                <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Explore By Category</h1>
-                <div class="row g-4">
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <a class="cat-item rounded p-4" href="">
-                            <i class="fa fa-3x fa-mail-bulk text-primary mb-4"></i>
-                            <h6 class="mb-3">Marketing</h6>
-                            <p class="mb-0">123 Vacancy</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <a class="cat-item rounded p-4" href="">
-                            <i class="fa fa-3x fa-headset text-primary mb-4"></i>
-                            <h6 class="mb-3">Customer Service</h6>
-                            <p class="mb-0">123 Vacancy</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <a class="cat-item rounded p-4" href="">
-                            <i class="fa fa-3x fa-user-tie text-primary mb-4"></i>
-                            <h6 class="mb-3">Human Resource</h6>
-                            <p class="mb-0">123 Vacancy</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <a class="cat-item rounded p-4" href="">
-                            <i class="fa fa-3x fa-tasks text-primary mb-4"></i>
-                            <h6 class="mb-3">Project Management</h6>
-                            <p class="mb-0">123 Vacancy</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <a class="cat-item rounded p-4" href="">
-                            <i class="fa fa-3x fa-chart-line text-primary mb-4"></i>
-                            <h6 class="mb-3">Business Development</h6>
-                            <p class="mb-0">123 Vacancy</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <a class="cat-item rounded p-4" href="">
-                            <i class="fa fa-3x fa-hands-helping text-primary mb-4"></i>
-                            <h6 class="mb-3">Sales & Communication</h6>
-                            <p class="mb-0">123 Vacancy</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <a class="cat-item rounded p-4" href="">
-                            <i class="fa fa-3x fa-book-reader text-primary mb-4"></i>
-                            <h6 class="mb-3">Teaching & Education</h6>
-                            <p class="mb-0">123 Vacancy</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <a class="cat-item rounded p-4" href="">
-                            <i class="fa fa-3x fa-drafting-compass text-primary mb-4"></i>
-                            <h6 class="mb-3">Design & Creative</h6>
-                            <p class="mb-0">123 Vacancy</p>
-                        </a>
-                    </div>
-                </div>
-            </div>
+     <form id="inscriptionFormAbonnement" method="POST" action="#">
+    
+        
+    <div class="mb-3">
+                        <label for="IdCours" class="form-label">IdCours :</label>
+                        <select class="form-select" id="IdCours" name="IdCours">
+                            <?php
+                            // Code PHP pour récupérer la liste des professeurs depuis la base de données
+                            // Remplacez cette partie avec votre propre logique pour récupérer la liste des professeurs
+                            include_once "../config.php";
+
+                            $sql = "SELECT IdCours, Titre FROM cours";
+
+                            try {
+                                $stmt = config::getConnexion()->prepare($sql);
+                                $stmt->execute();
+                                $listeProfesseurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                                foreach ($listeProfesseurs as $abonnement) {
+                                    echo "<option value=\"" . $abonnement['IdCours'] . "\">" . $abonnement['Titre'] . " (ID: " . $abonnement['IdCours'] . ")</option>";
+                                }
+                            } catch (PDOException $e) {
+                                echo "<option value=\"\">Erreur: " . $e->getMessage() . "</option>";
+                            }
+                            ?>
+                        </select>
+            </div>
+          <div class="mb-3">
+            <label for="DateDeb" class="form-label">DateDeb:</label>
+            <input type="date" class="form-control" id="DateDeb" name="DateDeb" required>
         </div>
-        <!-- Category End -->
+        <div class="mb-3">
+            <label for="DateFin" class="form-label">DateFin:</label>
+            <input type="date" class="form-control" id="DateFin" name="DateFin" required>
+        </div>
+        <div class="mb-3">
+            <label for="StatutPaiement" class="form-label">StatutPaiement:</label>
+            <input type="text" class="form-control" id="StatutPaiement" name="StatutPaiement">
+        </div>
+        <div class="mb-3">
+            <label for="MethodeDePaiement" class="form-label">MethodeDePaiement:</label>
+            <input type="text" class="form-control" id="MethodeDePaiement" name="MethodeDePaiement">
+        </div>
+        <div class="mb-3">
+            <label for="Prix" class="form-label">Prix:</label>
+            <input type="number" class="form-control" id="Prix" name="Prix">
+        </div>
+        <div class="mb-3">
+            <label for="SommePayee" class="form-label">SommePayee:</label> 
+            <input type="number" class="form-control" id="SommePayee" name="SommePayee">
+        </div>
+         
+        <div class="mb-3">
+            <label for="SommeRestante" class="form-label">SommeRestante:</label>
+            <input type="number" class="form-control" id="SommeRestante" name="SommeRestante">
+        </div>
+        <div class="mb-3">
+       
+   
+    <button type="submit" name="submit" class="btn btn-primary"  >S'abonner</button>
+
+        </div>
+    </form>
 
 
+
+
+        </div>
+    </form>
+</div>
+
+
+
+       
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
             <div class="container py-5">

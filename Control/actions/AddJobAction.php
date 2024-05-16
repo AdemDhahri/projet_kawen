@@ -15,15 +15,16 @@ if (isset($_POST['submit'])) {
     $Prerequis = htmlspecialchars($_POST['Prerequis']);
     $Certification = htmlspecialchars($_POST['Certification']);
     $IdFormateur = htmlspecialchars($_POST['IdFormateur']);
-    $NewCours = new cours(null,$Titre,$Description,$Categorie,$Format,$DatePost,$DateExpir,$Langue,$Prix,$CompetencesAcquises,$Prerequis,$Certification,$IdFormateur);
+    $Support = htmlspecialchars($_POST['Support']);
+    $NewCours = new cours(null,$Titre,$Description,$Categorie,$Format,$DatePost,$DateExpir,$Langue,$Prix,$CompetencesAcquises,$Prerequis,$Certification,$IdFormateur,$Support);
     createcours($NewCours);
-    header('Location: cours.php');
+    header('Location: gerercours.php');
 }
 function createcours(cours $jobD)
 {
     // Insert into the database
-    $sql = "INSERT INTO cours (Titre ,Description ,Categorie ,Format ,DatePost ,DateExpir, Langue, Prix, CompetencesAcquises, Prerequis, Certification, IdFormateur) 
-                VALUES (:Titre ,:Description ,:Categorie ,:Format ,:DatePost ,:DateExpir, :Langue, :Prix, :CompetencesAcquises, :Prerequis, :Certification, :IdFormateur)";
+    $sql = "INSERT INTO cours (Titre ,Description ,Categorie ,Format ,DatePost ,DateExpir, Langue, Prix, CompetencesAcquises, Prerequis, Certification, IdFormateur,Support) 
+                VALUES (:Titre ,:Description ,:Categorie ,:Format ,:DatePost ,:DateExpir, :Langue, :Prix, :CompetencesAcquises, :Prerequis, :Certification, :IdFormateur, :Support)";
 
     try {
 
@@ -41,10 +42,17 @@ function createcours(cours $jobD)
             ':CompetencesAcquises' => $jobD->getCompetencesAcquises(),
             ':Prerequis' => $jobD->getPrerequis(),
             ':Certification' => $jobD->getCertification(),
-            ':IdFormateur' => $jobD->getIdFormateur()
+            ':IdFormateur' => $jobD->getIdFormateur(),
+            ':Support' => $jobD->getSupport()
+
         ]);
     } catch (PDOException $e) {
         echo 'Erreur: ' . $e->getMessage();
     }
     
 }
+
+
+
+
+

@@ -1,9 +1,3 @@
-<?php 
-include('../../Model/cours.php');
-include('../../Control/CoursC.php');
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +9,7 @@ include('../../Control/CoursC.php');
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="../../assests/front/img/favicon.ico" rel="icon">
+    <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,7 +46,7 @@ include('../../Control/CoursC.php');
 
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-            <a href="index.html" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
+            <a href="index.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
                 <img src="../../assests/front/img/kaween3.png" alt="" width="200" height="50" />
             </a>
             <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
@@ -61,27 +55,27 @@ include('../../Control/CoursC.php');
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="index.html" class="nav-item nav-link">Accueil</a>
-                    <a href="about.html" class="nav-item nav-link">A propos</a>
-                    <a href="cours.php" class="nav-item nav-link">COURS</a>
-                    <!--<div class="nav-item dropdown">
+                    <a href="index.php" class="nav-item nav-link">ACCUEIL</a>
+                    <a href="about.php" class="nav-item nav-link">A PROPOS</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Cours</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="job-list.html" class="dropdown-item">Job list</a>
-                            <a href="job-detail.html" class="dropdown-item">Job details</a>
+                            <a href="addchercheur.php" class="dropdown-item">ajouter cours</a>
+                            <a href="gerercours.php" class="dropdown-item">les cours</a>
                     
                         </div>
-                    </div>!-->
+                    </div>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Partenaires</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="category.html" class="dropdown-item">Job Category</a>
-                            <a href="testimonial.html" class="dropdown-item">Nos offres</a>
-                            <a href="404.html" class="dropdown-item">404</a>
+                            <a href="category.php" class="dropdown-item">formations</a>
+                            <a href="testimonial.php" class="dropdown-item active">Nos Offres</a>
+                            <a href="404.php" class="dropdown-item">Cour en Ligne</a>
                         </div>
                     </div>
-                    <a href="contact.html" class="nav-item nav-link">Contactez-nous</a>
+                    <a href="contact.php" class="nav-item nav-link">Contactez-nous</a>
                 </div>
-                <a href="login.html" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">S'inscrire<i
+                <a href="login.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">S'inscrire<i
                         class="fa fa-arrow-right ms-3"></i></a>
             </div>
         </nav>
@@ -91,12 +85,12 @@ include('../../Control/CoursC.php');
         <!-- Header End -->
         <div class="container-xxl py-5 bg-dark page-header mb-5">
             <div class="container my-5 pt-5 pb-4">
-                <h1 class="display-3 text-white mb-3 animated slideInDown">Liste des cours</h1>
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Nos Offres</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb text-uppercase">
                         <li class="breadcrumb-item"><a href="#">Accueil</a></li>
-                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                        <li class="breadcrumb-item text-white active" aria-current="page">Liste des cours</li>
+                        <li class="breadcrumb-item"><a href="#">Partenaires</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Testimonial</li>
                     </ol>
                 </nav>
             </div>
@@ -104,78 +98,65 @@ include('../../Control/CoursC.php');
         <!-- Header End -->
 
 
-        <!-- Jobs Start -->
-        <div class="container-xxl py-5">
+        <!-- Testimonial Start -->
+        <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
             <div class="container">
-                <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Liste des cours</h1>
-                
-                    <div class="d-flex mb-3">
-                        <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a>
-                        <button class="btn btn-primary" id="btnAjouterCours">Ajouter Cours</button>
+                <h1 class="text-center mb-5">Offres a la une!</h1>
+                <div class="owl-carousel testimonial-carousel">
+                    <div class="testimonial-item bg-light rounded p-4">
+                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                        <p>"Étudiants, économisez sur vos cours et développez vos compétences avec nos remises
+                            exclusives!</p>
+                        <div class="d-flex align-items-center">
+                            <img class="img-fluid flex-shrink-0 rounded" src="../../assests/front/img/special.jpg"
+                                style="width: 50px; height: 50px;">
+                            <div class="ps-3">
+                                <h5 class="mb-1"></h5>Offre pour les étudiants </h5>
+
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div id="formulaireAjoutCours" style="display: none;">
-                            <h1>Ajouter un cours</h1>
-                            <form action="ajouter_cours.php" method="post">
+                    <div class="testimonial-item bg-light rounded p-4">
+                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                        <p>Profitez des remises printanières et fleurissez votre apprentissage avec des offres
+                            spéciales!</p>
+                        <div class="d-flex align-items-center">
+                            <img class="img-fluid flex-shrink-0 rounded" src="../../assests/front/img/imm.jpg"
+                                style="width: 50px; height: 50px;">
+                            <div class="ps-3">
+                                <h5 class="mb-1">Offre du printemps </h5>
 
-                            <label for="titre">Titre :</label>
-                            <input type="text" id="titre" name="titre"><br>
-
-                            <label for="description">Description :</label>
-                            <textarea id="description" name="description"></textarea><br>
-
-                            <label for="categorie">Catégorie :</label>
-                            <input type="text" id="categorie" name="categorie"><br>
-
-                            <label for="format">Format :</label>
-                            <input type="text" id="format" name="format"><br>
-
-                            <label for="datePost">Date du post :</label>
-                            <input type="date" id="datePost" name="datePost"><br>
-
-                            <label for="dateExpir">Date d'expiration :</label>
-                            <input type="date" id="dateExpir" name="dateExpir"><br>
-
-                            <label for="langue">Langue :</label>
-                            <input type="text" id="langue" name="langue"><br>
-
-                            <label for="prix">Prix :</label>
-                            <input type="number" id="prix" name="prix"><br>
-
-                            <label for="competencesAcquises">Compétences acquises :</label>
-                            <textarea id="competencesAcquises" name="competencesAcquises"></textarea><br>
-
-                            <label for="prerequis">Prérequis :</label>
-                            <textarea id="prerequis" name="prerequis"></textarea><br>
-
-                            <label for="certification">Certification obtenue :</label>
-                            <input type="text" id="certification" name="certification"><br>
-
-                            <label for="idFormateur">ID Formateur :</label>
-                            <input type="text" id="idFormateur" name="idFormateur"><br>
-
-                
-                            <!-- Ajoutez d'autres champs pour les autres propriétés du cours selon vos besoins -->
-                
-                            <input type="submit" name="submit" value="Ajouter le cours">
-                        </form>
+                            </div>
+                        </div>
                     </div>
-                
-                    <script>
-                        // Récupérer le bouton "Ajouter Cours" et le formulaire
-                        var btnAjouterCours = document.getElementById('btnAjouterCours');
-                        var formulaireAjoutCours = document.getElementById('formulaireAjoutCours');
-                
-                        // Ajouter un gestionnaire d'événement pour le clic sur le bouton
-                        btnAjouterCours.addEventListener('click', function() {
-                            // Afficher le formulaire
-                            formulaireAjoutCours.style.display = 'block';
-                        });
-                    </script>
+                    <div class="testimonial-item bg-light rounded p-4">
+                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                        <p>Des remises exceptionnelles pour le Black Friday - Ne manquez pas cette occasion de faire des
+                            économies sur vos cours!</p>
+                        <div class="d-flex align-items-center">
+                            <img class="img-fluid flex-shrink-0 rounded" src="../../assests/front/img/bf.png"
+                                style="width: 50px; height: 50px;">
+                            <div class="ps-3">
+                                <h5 class="mb-1">Black Friday</h5>
 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-item bg-light rounded p-4">
+                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                        <p>restez a l'ecoute</p>
+                        <div class="d-flex align-items-center">
+                            <img class="img-fluid flex-shrink-0 rounded" src=".jpg" style="width: 50px; height: 50px;">
+                            <div class="ps-3">
+                                <h5 class="mb-1">Prochainement</h5>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- Jobs End -->
+        <!-- Testimonial End -->
 
 
         <!-- Footer Start -->

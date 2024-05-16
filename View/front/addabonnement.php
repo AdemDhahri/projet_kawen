@@ -1,32 +1,50 @@
 <?php 
+include('../../Model/abonnement.php');
 include('../../Model/chercheur.php');
-include('../../Model/JobControl.php');
+include('../../Control/AddSubscriptionAction.php');
 
-include('../../Control/actions/updatejob.php');
+
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
 <script>
    document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('inscriptionForm').addEventListener('submit', function(event) {
-                var Titre = document.forms["inscriptionForm"]["Titre"].value;
-                var Description = document.forms["inscriptionForm"]["Description"].value;
-                var Categorie = document.forms["inscriptionForm"]["Categorie"].value;
-                var Format = document.forms["inscriptionForm"]["Format"].value;
-                var DatePost = document.forms["inscriptionForm"]["DatePost"].value;
-                var DateExpir = document.forms["inscriptionForm"]["DateExpir"].value;
-                var Langue = document.forms["inscriptionForm"]["Langue"].value;
-                var Prix = document.forms["inscriptionForm"]["Prix"].value;
-                var CompetencesAcquises = document.forms["inscriptionForm"]["CompetencesAcquises"].value;
-                var Prerequis = document.forms["inscriptionForm"]["Prerequis"].value;
-                var Certification = document.forms["inscriptionForm"]["Certification"].value;
-                var IdFormateur = document.forms["inscriptionForm"]["IdFormateur"].value;
-                var Support = document.forms["inscriptionForm"]["Support"].value;
+            document.getElementById('inscriptionFormAbonnement').addEventListener('submit', function(event) {
+                
+                var DateDeb = document.forms["inscriptionFormAbonnement"]["DateDeb"].value;
+                var DateFin = document.forms["inscriptionFormAbonnement"]["DateFin"].value;
+                var StatutPaiement = document.forms["inscriptionFormAbonnement"]["StatutPaiement"].value;
+                var MethodeDePaiement = document.forms["inscriptionFormAbonnement"]["MethodeDePaiement"].value;
+                var Prix = document.forms["inscriptionFormAbonnement"]["Prix"].value;
+                var SommePayee = document.forms["inscriptionFormAbonnement"]["SommePayee"].value;
+                var SommeRestante = document.forms["inscriptionFormAbonnement"]["SommeRestante"].value;
 
+            
+
+
+                // Utilisation d'une expression régulière pour vérifier que le nom contient uniquement des lettres alphabétiques
+                var lettersOnly = /^[A-Za-z]+$/;
+                var numericOnly = /^[0-9]+$/;
+
+                
+                if (!lettersOnly.test(StatutPaiement) || StatutPaiement.length < 2) {
+                    alert("Veuillez entrer un StatutPaiement valide (lettres uniquement et au moins 2 caractères).");
+                    event.preventDefault(); // Empêche l'envoi du formulaire si la validation échoue
+                }
+                if (!lettersOnly.test(MethodeDePaiement) || MethodeDePaiement.length < 2) {
+                    alert("Veuillez entrer un MethodeDePaiement valide (lettres uniquement et au moins 2 caractères).");
+                    event.preventDefault(); // Empêche l'envoi du formulaire si la validation échoue
+                }
+                if (!numericOnly.test(Prix) || Prix.length !== 3) {
+                    alert("Veuillez entrer un prix valide (3 chiffres).");
+                    event.preventDefault();
+                }
+                // Autres validations à ajouter si nécessaire
             });
         });
     </script>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>JobEntry - Job Portal Website Template</title>
@@ -60,15 +78,8 @@ include('../../Control/actions/updatejob.php');
 
 <body>
     <div class="container-xxl bg-white p-0">
-        <!-- Spinner Start -->
-        <div id="spinner"
-            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-        <!-- Spinner End -->
-
+    
+       
 
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
@@ -84,11 +95,10 @@ include('../../Control/actions/updatejob.php');
                     <a href="index.php" class="nav-item nav-link">Accueil</a>
                     <a href="about.php" class="nav-item nav-link">A propos</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Cours</a>
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">cours</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="addchercheur.php" class="dropdown-item">ajouter cours</a>
+                            <a href="addchercheur.php" class="dropdown-item active">ajouter cours</a>
                             <a href="gerercours.php" class="dropdown-item">les cours</a>
-                    
                         </div>
                     </div>
                     <div class="nav-item dropdown">
@@ -111,12 +121,12 @@ include('../../Control/actions/updatejob.php');
         <!-- Header End -->
         <div class="container-xxl py-5 bg-dark page-header mb-5">
             <div class="container my-5 pt-5 pb-4">
-                <h1 class="display-3 text-white mb-3 animated slideInDown">Cours List</h1>
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Job List</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb text-uppercase">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                        <li class="breadcrumb-item text-white active" aria-current="page"> Cours List</li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Job List</li>
                     </ol>
                 </nav>
             </div>
@@ -126,73 +136,71 @@ include('../../Control/actions/updatejob.php');
 <!-- Section Annonce Chercheur d'Emploi -->
 <!-- Formulaire pour l'annonce du chercheur d'emploi -->
 <div class="container py-5">
-    <h2>Publier une Annonce de Chercheur d'Emploi</h2>
-    <form id="inscriptionForm" action="#" method="post">
+    <h2>S'abonner</h2>
+    <form id="inscriptionFormAbonnement" method="POST" action="../../Control/AddSubscriptionAction.php">
+    
+        
     <div class="mb-3">
-            <label for="Titre" class="form-label">Titre:</label>
-            <input type="text" class="form-control" id="Titre" name="Titre" required>
+                        <label for="IdCours" class="form-label">IdCours :</label>
+                        <select class="form-select" id="IdCours" name="IdCours">
+                            <?php
+                            // Code PHP pour récupérer la liste des professeurs depuis la base de données
+                            // Remplacez cette partie avec votre propre logique pour récupérer la liste des professeurs
+                            include_once "../config.php";
+
+                            $sql = "SELECT IdCours, Titre FROM cours";
+
+                            try {
+                                $stmt = config::getConnexion()->prepare($sql);
+                                $stmt->execute();
+                                $listeProfesseurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                                foreach ($listeProfesseurs as $abonnement) {
+                                    echo "<option value=\"" . $abonnement['IdCours'] . "\">" . $abonnement['Titre'] . " (ID: " . $abonnement['IdCours'] . ")</option>";
+                                }
+                            } catch (PDOException $e) {
+                                echo "<option value=\"\">Erreur: " . $e->getMessage() . "</option>";
+                            }
+                            ?>
+                        </select>
+            </div>
+          <div class="mb-3">
+            <label for="DateDeb" class="form-label">DateDeb:</label>
+            <input type="date" class="form-control" id="DateDeb" name="DateDeb" required>
         </div>
         <div class="mb-3">
-            <label for="Description" class="form-label">Description:</label>
-            <input type="text" class="form-control" id="Description" name="Description" required>
+            <label for="DateFin" class="form-label">DateFin:</label>
+            <input type="date" class="form-control" id="DateFin" name="DateFin" required>
         </div>
         <div class="mb-3">
-            <label for="Categorie" class="form-label">Categorie:</label>
-            <input type="text" class="form-control" id="Categorie" name="Categorie" required>
+            <label for="StatutPaiement" class="form-label">StatutPaiement:</label>
+            <input type="text" class="form-control" id="StatutPaiement" name="StatutPaiement">
         </div>
         <div class="mb-3">
-            <label for="Format" class="form-label">Format:</label>
-            <input type="text" class="form-control" id="Format" name="Format">
-        </div>
-        <div class="mb-3">
-            <label for="DatePost" class="form-label">DatePost:</label>
-            <input type="date" class="form-control" id="DatePost" name="DatePost">
-        </div>
-        <div class="mb-3">
-            <label for="DateExpir" class="form-label">DateExpir:</label>
-            <input type="date" class="form-control" id="DateExpir" name="DateExpir">
-        </div>
-        <div class="mb-3">
-            <label for="Langue" class="form-label">Langue:</label>
-            <input type="text" class="form-control" id="Langue" name="Langue">
+            <label for="MethodeDePaiement" class="form-label">MethodeDePaiement:</label>
+            <input type="text" class="form-control" id="MethodeDePaiement" name="MethodeDePaiement">
         </div>
         <div class="mb-3">
             <label for="Prix" class="form-label">Prix:</label>
             <input type="number" class="form-control" id="Prix" name="Prix">
         </div>
         <div class="mb-3">
-            <label for="CompetencesAcquises" class="form-label">CompetencesAcquises:</label>
-            <input type="text" class="form-control" id="CompetencesAcquises" name="CompetencesAcquises">
+            <label for="SommePayee" class="form-label">SommePayee:</label> 
+            <input type="number" class="form-control" id="SommePayee" name="SommePayee">
+        </div>
+         
+        <div class="mb-3">
+            <label for="SommeRestante" class="form-label">SommeRestante:</label>
+            <input type="number" class="form-control" id="SommeRestante" name="SommeRestante">
         </div>
         <div class="mb-3">
-            <label for="Prerequis" class="form-label">Prerequis:</label>
-            <input type="text" class="form-control" id="Prerequis" name="Prerequis">
-        </div>
-        <div class="mb-3">
-            <label for="Certification" class="form-label">Certification:</label>
-            <input type="text" class="form-control" id="Certification" name="Certification">
-        </div>
-        <div class="mb-3">
-            <label for="IdFormateur" class="form-label">IdFormateur:</label>
-            <input type="number" class="form-control" id="IdFormateur" name="IdFormateur">
-        </div>
-        <div class="mb-3">
-            <label for="Support" class="form-label">Support:</label>
-            <input type="file" class="form-control" id="Support" name="Support" accept=".pdf">
-        </div>
-        <div class="mb-3">
-        <form action="../../Control/actions/updatejob.php" method="POST">
-    <input type="hidden" name="id" value="1"> <!-- Hardcoded value for testing -->
-    <button type="submit" name="submit"href="../../Control/actions/updatejob.php?id=<?= $coursK['IdCours']; ?>" class="btn btn-primary" >Modifier cours</button>
-</form>
-
-
-
+       
+   
+    <button type="submit" name="submit" class="btn btn-primary"  >S'abonner</button>
 
         </div>
     </form>
 </div>
-
 
 
        

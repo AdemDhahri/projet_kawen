@@ -1,6 +1,41 @@
+<?php 
+include('../../Model/chercheur.php');
+include('../../Control/actions/AddJobAction.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+<script>
+   document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('inscriptionForm').addEventListener('submit', function(event) {
+                var nom = document.forms["inscriptionForm"]["nom"].value;
+                var prenom = document.forms["inscriptionForm"]["prenom"].value;
+                var telephone = document.forms["inscriptionForm"]["telephone"].value;
 
+
+
+                // Utilisation d'une expression régulière pour vérifier que le nom contient uniquement des lettres alphabétiques
+                var lettersOnly = /^[A-Za-z]+$/;
+                var numericOnly = /^[0-9]+$/;
+
+                if (!lettersOnly.test(nom) || nom.length < 2) {
+                    alert("Veuillez entrer un nom valide (lettres uniquement et au moins 2 caractères).");
+                    event.preventDefault(); // Empêche l'envoi du formulaire si la validation échoue
+                }
+                if (!lettersOnly.test(prenom) || prenom.length < 2) {
+                    alert("Veuillez entrer un prenom valide (lettres uniquement et au moins 2 caractères).");
+                    event.preventDefault(); // Empêche l'envoi du formulaire si la validation échoue
+                }
+                if (!numericOnly.test(telephone) || telephone.length !== 8) {
+                    alert("Veuillez entrer un numéro de téléphone valide (8 chiffres).");
+                    event.preventDefault();
+                }
+               
+                // Autres validations à ajouter si nécessaire
+            });
+        });
+    </script>
 <head>
     <meta charset="utf-8">
     <title>JobEntry - Job Portal Website Template</title>
@@ -46,7 +81,7 @@
 
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-            <a href="index.html" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
+            <a href="index.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
                 <img src="../../assests/front/img/kaween3.png" alt="" width="200" height="50" />
             </a>
             <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
@@ -55,26 +90,26 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="index.html" class="nav-item nav-link">Accueil</a>
-                    <a href="about.html" class="nav-item nav-link">A propos</a>
+                    <a href="index.php" class="nav-item nav-link">Accueil</a>
+                    <a href="about.php" class="nav-item nav-link">A propos</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Jobs</a>
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">cours</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="job-list.html" class="dropdown-item">Job List</a>
-                            <a href="job-detail.html" class="dropdown-item">Job Detail</a>
+                            <a href="addchercheur.php" class="dropdown-item active">ajouter cours</a>
+                            <a href="gerercours.php" class="dropdown-item">les cours</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="category.html" class="dropdown-item">Job Category</a>
-                            <a href="testimonial.html" class="dropdown-item">Nos offres</a>
-                            <a href="404.html" class="dropdown-item active">404</a>
+                            <a href="category.php" class="dropdown-item">Job Category</a>
+                            <a href="testimonial.php" class="dropdown-item">Nos offres</a>
+                            <a href="404.php" class="dropdown-item">404</a>
                         </div>
                     </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a href="contact.php" class="nav-item nav-link">Contactez-nous</a>
                 </div>
-                <a href="" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Post A Job<i
+                <a href="login.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">S'inscrire<i
                         class="fa fa-arrow-right ms-3"></i></a>
             </div>
         </nav>
@@ -84,37 +119,87 @@
         <!-- Header End -->
         <div class="container-xxl py-5 bg-dark page-header mb-5">
             <div class="container my-5 pt-5 pb-4">
-                <h1 class="display-3 text-white mb-3 animated slideInDown">404 Error</h1>
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Job List</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb text-uppercase">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                        <li class="breadcrumb-item text-white active" aria-current="page">404 Error</li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Job List</li>
                     </ol>
                 </nav>
             </div>
         </div>
         <!-- Header End -->
 
-
-        <!-- 404 Start -->
-        <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
-            <div class="container text-center">
-                <div class="row justify-content-center">
-                    <div class="col-lg-6">
-                        <i class="bi bi-exclamation-triangle display-1 text-primary"></i>
-                        <h1 class="display-1">404</h1>
-                        <h1 class="mb-4">Page Not Found</h1>
-                        <p class="mb-4">We’re sorry, the page you have looked for does not exist in our website! Maybe
-                            go to our home page or try to use a search?</p>
-                        <a class="btn btn-primary py-3 px-5" href="index.html">Go Back To Home</a>
-                    </div>
-                </div>
-            </div>
+<!-- Section Annonce Chercheur d'Emploi -->
+<!-- Formulaire pour l'annonce du chercheur d'emploi -->
+<div class="container py-5">
+    <h2>Publier une Annonce de Chercheur d'Emploi</h2>
+    <form id="inscriptionForm" method="post">
+        <div class="mb-3">
+            <label for="Titre" class="form-label">Titre:</label>
+            <input type="text" class="form-control" id="Titre" name="Titre" required>
         </div>
-        <!-- 404 End -->
+        <div class="mb-3">
+            <label for="prDescriptionenom" class="form-label">Description:</label>
+            <input type="text" class="form-control" id="Description" name="Description" required>
+        </div>
+        <div class="mb-3">
+            <label for="Categorie" class="form-label">Categorie:</label>
+            <input type="text" class="form-control" id="Categorie" name="Categorie" required>
+        </div>
+        <div class="mb-3">
+            <label for="Format" class="form-label">Format:</label>
+            <input type="text" class="form-control" id="Format" name="Format">
+        </div>
+        <div class="mb-3">
+            <label for="DatePost" class="form-label">DatePost:</label>
+            <input type="date" class="form-control" id="DatePost" name="DatePost">
+        </div>
+        <div class="mb-3">
+            <label for="DateExpir" class="form-label">DateExpir:</label>
+            <input type="date" class="form-control" id="DateExpir" name="DateExpir">
+        </div>
+        <div class="mb-3">
+            <label for="Langue" class="form-label">Langue:</label>
+            <input type="text" class="form-control" id="Langue" name="Langue">
+        </div>
+        <div class="mb-3">
+            <label for="Prix" class="form-label">Prix:</label>
+            <input type="number" class="form-control" id="Prix" name="Prix">
+        </div>
+        <div class="mb-3">
+            <label for="CompetencesAcquises" class="form-label">CompetencesAcquises:</label>
+            <input type="text" class="form-control" id="CompetencesAcquises" name="CompetencesAcquises">
+        </div>
+        <div class="mb-3">
+            <label for="Prerequis" class="form-label">Prerequis:</label>
+            <input type="text" class="form-control" id="Prerequis" name="Prerequis">
+        </div>
+        <div class="mb-3">
+            <label for="Certification" class="form-label">Certification:</label>
+            <input type="text" class="form-control" id="Certification" name="Certification">
+        </div>
+        <div class="mb-3">
+            <label for="IdFormateur" class="form-label">IdFormateur:</label>
+            <input type="number" class="form-control" id="IdFormateur" name="IdFormateur">
+        </div>
+        <div class="mb-3">
+            <label for="Support" class="form-label">Support:</label>
+            <input type="file" class="form-control" id="Support" name="Support" accept=".pdf">
+        </div>
+         <!--<div class="mb-3">
+            <label for="cv" class="form-label">CV (PDF):</label>
+            <input type="file" class="form-control" id="cv" name="cv" accept=".pdf">
+        </div>!-->
+        <div class="mb-3">
+            <button type="submit" name="submit" class="btn btn-primary">Publier Cours</button>
+        </div>
+    </form>
+</div>
 
 
+       
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
             <div class="container py-5">

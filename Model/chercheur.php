@@ -14,6 +14,7 @@ class cours{
     private $Prerequis;
     private $Certification;
     private $IdFormateur;
+    private $Support;
 
     public function getIdCours(){
         return $this->IdCours;
@@ -93,8 +94,14 @@ class cours{
     public function setIdFormateur($a){
         $this->IdFormateur=$a;
     }
+    public function getSupport(){
+        return $this->Support;
+    }
+    public function setSupport($a){
+        $this->Support=$a;
+    }
     
-    public function __construct ($a,$b,$c,$d,$e,$f,$g,$h,$i,$j,$k,$l,$m){
+    public function __construct ($a,$b,$c,$d,$e,$f,$g,$h,$i,$j,$k,$l,$m,$n){
         $this->IdCours=$a;
         $this->Titre=$b;
         $this->Description=$c;
@@ -108,9 +115,12 @@ class cours{
         $this->Prerequis=$k;
         $this->Certification=$l;
         $this->IdFormateur=$m;
+        $this->Support=$n;
     }
 
     
 }
 
 ?>
+
+
